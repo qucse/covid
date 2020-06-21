@@ -1,0 +1,11 @@
+.nav-text {
+	color: black;
+}
+.nav-text:hover {
+	color: black;
+	text-decoration: none;
+}
+
+.nav-links {
+	margin-right: 15px;
+}
