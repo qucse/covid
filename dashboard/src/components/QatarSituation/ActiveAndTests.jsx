@@ -3,10 +3,10 @@ import './InformationCard.css';
 import { ActiveCases } from './ActiveCases';
 import { DailyTests } from './DailyTests';
 
-export const ActiveAndTests = ({ active, confirmed, tests }) => {
+export const ActiveAndTests = ({ active, deaths, recovered, tests }) => {
 	return (
-		<div className="row mt-5">
-			<ActiveCases activeCases={active} nonActiveCases={confirmed - active} active={active} />
+		<div className="row mt-5 mb-5">
+			<ActiveCases active={active} deaths={deaths} recovered={recovered} />
 			<DailyTests tests={tests} />
 		</div>
 	);

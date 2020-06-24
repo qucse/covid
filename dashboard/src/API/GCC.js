@@ -24,9 +24,10 @@ class GCC {
 		let data = response.data;
 		let lastData = data[data.length - 1];
 		let previousLast = data[data.length - 2];
+		let date = new Date(lastData.Date);
 		return {
 			country: lastData.Country,
-			date: lastData.Date,
+			date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
 			newConfirmed: lastData.Confirmed - previousLast.Confirmed,
 			confirmed: lastData.Confirmed,
 			newDeaths: lastData.Deaths - previousLast.Deaths,

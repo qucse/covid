@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { NavBar } from './components/NavBar';
 import { QatarSituation } from './pages/QatarSituation';
-import { PredictionModel } from './pages/PredictionModel';
+import { WhatIf } from './pages/WhatIf';
 import { GCCSituation } from './pages/GCCSituation';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
 					<GCCSituation />
 				</Route>
 				<Route path="/prediction">
-					<PredictionModel />
+					<WhatIf />
 				</Route>
 			</Switch>
 		</Router>

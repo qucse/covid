@@ -34,14 +34,21 @@ export const QatarSituation = () => {
 	return latestInformation && dailyData && dailyTests ? (
 		<div className="container">
 			<GeneralData data={latestInformation} />
+			<DailyData data={dailyData} />
 			<ActiveAndTests
 				active={latestInformation.totalActiveCases}
-				confirmed={latestInformation.confirmed}
+				deaths={latestInformation.deaths}
+				recovered={latestInformation.recovered}
 				tests={dailyTests}
 			/>
-			<DailyData data={dailyData} />
 		</div>
 	) : (
-		<LoadingScreen loading={true} bgColor="#f2f4f5" spinnerColor="#9ee5f8" textColor="#676767" text="Loading..." />
+		<LoadingScreen
+			loading={true}
+			bgColor="#f2f4f5"
+			spinnerColor="#9ee5f8"
+			textColor="#676767"
+			text="Loading Data ..."
+		/>
 	);
 };

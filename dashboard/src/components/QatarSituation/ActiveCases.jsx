@@ -1,15 +1,14 @@
 import React from 'react';
-import { Doughnut } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
-export const ActiveCases = ({ activeCases, nonActiveCases, active }) => {
-
+export const ActiveCases = ({ active, deaths, recovered }) => {
 	const data = {
-		labels: [ 'Active Cases', 'Non-Active Cases' ],
+		labels: [ 'Active', 'Recovered', 'Death' ],
 		datasets: [
 			{
-				data: [ activeCases, nonActiveCases ],
-				backgroundColor: [ '#FF6384', '#36A2EB' ],
-				hoverBackgroundColor: [ '#FF6384', '#36A2EB' ]
+				data: [ active, recovered, deaths ],
+				backgroundColor: [ 'rgba(40, 158, 209,1)', 'rgba(64, 168, 50,1)', 'rgba(235, 5, 5,1)' ],
+				hoverBackgroundColor: [ 'rgba(40, 158, 209,1)', 'rgba(64, 168, 50,1)', 'rgba(235, 5, 5,1)' ]
 			}
 		]
 	};
@@ -21,7 +20,7 @@ export const ActiveCases = ({ activeCases, nonActiveCases, active }) => {
 					<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
 						Active Vs. Non-Active
 					</p>
-					<Doughnut data={data} />
+					<Pie data={data} />
 				</div>
 			</div>
 		</div>

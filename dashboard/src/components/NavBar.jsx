@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+import qu from '../assets/images/qu.png';
 export const NavBar = () => {
 	return (
 		<Navbar bg="light" expand="lg">

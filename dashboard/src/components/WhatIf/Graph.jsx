@@ -1,13 +1,22 @@
 import React from 'react';
-import './InformationCard.css';
 import { Line } from 'react-chartjs-2';
 
-export const DailyData = ({ data }) => {
+export const Graph = ({ data }) => {
+	let predicted = [],
+		dates = [],
+		actual = [];
+
+	data.forEach((element) => {
+		dates.push(element.date);
+		predicted.push(element.predicted);
+		if (element.observed) actual.push(element.observed);
+	});
+
 	const info = {
-		labels: data[0],
+		labels: dates,
 		datasets: [
 			{
-				label: 'Confirmed Cases',
+				label: 'Actual',
 				fill: false,
 				lineTension: 0.1,
 				backgroundColor: 'rgba(40, 158, 209,0.4)',
@@ -25,10 +34,10 @@ export const DailyData = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: data[1]
+				data: actual
 			},
 			{
-				label: 'Recovered Cases',
+				label: 'Predicted',
 				fill: false,
 				lineTension: 0.1,
 				backgroundColor: 'rgba(64, 168, 50,0.4)',
@@ -46,37 +55,16 @@ export const DailyData = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: data[3]
-			},
-			{
-				label: 'Death Cases',
-				fill: false,
-				lineTension: 0.1,
-				backgroundColor: 'rgba(235, 5, 5,0.4)',
-				borderColor: 'rgba(235, 5, 5,1)',
-				borderCapStyle: 'butt',
-				borderDash: [],
-				borderDashOffset: 0.0,
-				borderJoinStyle: 'miter',
-				pointBorderColor: 'rgba(235, 5, 5,1)',
-				pointBackgroundColor: '#fff',
-				pointBorderWidth: 1,
-				pointHoverRadius: 5,
-				pointHoverBackgroundColor: 'rgba(235, 5, 5,1)',
-				pointHoverBorderColor: 'rgba(220,220,220,1)',
-				pointHoverBorderWidth: 2,
-				pointRadius: 2,
-				pointHitRadius: 10,
-				data: data[2]
+				data: predicted
 			}
 		]
 	};
 
 	return (
-		<div className="card mt-5  pl-3 pr-3 pb-3">
+		<div className="card mt-3 mb-4  pl-3 pr-3 pb-3">
 			<div className="card-container">
 				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
-					Daily Data
+					What-If Analysis
 				</p>
 				<Line data={info} />
 			</div>

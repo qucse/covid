@@ -1,8 +1,8 @@
 .card-container {
 	display: flex;
 	flex-direction: column;
-    align-items: center;
-    padding: 6px;
+	align-items: center;
+	padding: 6px;
 }
 
 p {
@@ -20,5 +20,8 @@ p {
 }
 
 .subData {
-	color: green;
+	/* background-color: rgb(40, 167, 69,0.6); */
+	border-radius: 5px;
+	padding: 5px;
+	font-size: 18px;
 }
