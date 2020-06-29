@@ -64,7 +64,7 @@ export const Graph = ({ data }) => {
 		<div className="card mt-3 mb-4  pl-3 pr-3 pb-3">
 			<div className="card-container">
 				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
-					What-If Analysis
+				Actual Vs. Predicted
 				</p>
 				<Line data={info} />
 			</div>

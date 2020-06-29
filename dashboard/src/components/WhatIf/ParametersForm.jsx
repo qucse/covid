@@ -5,105 +5,107 @@ export const ParametersForm = () => {
 	let schoolClosing = [
 		{
 			value: 0,
-			label: 'No Measures'
+			label: '0'
 		},
 		{
 			value: 30,
-			label: 'Recommend Closing'
+			label: '1'
 		},
 		{
 			value: 70,
-			label: 'Require Closing'
+			label: '2'
 		},
 		{
 			value: 100,
-			label: 'Close All Levels'
+			label: '3'
 		}
 	];
 
 	let workspaceClosing = [
 		{
 			value: 0,
-			label: 'No Measures'
+			label: '0'
 		},
 		{
 			value: 30,
-			label: 'Recommend Closing'
+			label: '1'
 		},
 		{
 			value: 70,
-			label: 'Require Closing'
+			label: '2'
 		},
 		{
 			value: 100,
-			label: 'Close All Levels'
+			label: '3'
 		}
 	];
 
 	let restrictionsOnGatherings = [
 		{
 			value: 0,
-			label: 'No Measures'
+			label: '0'
 		},
 		{
 			value: 25,
-			label: '> 1000 people'
+			label: '1'
 		},
 		{
 			value: 50,
-			label: '101-1000 people'
+			label: '2'
 		},
 		{
 			value: 75,
-			label: '11-100 people'
+			label: '3'
 		},
 		{
 			value: 100,
-			label: '< 10 people'
+			label: '4'
 		}
-    ];
-    
+	];
+
 	let closePT = [
 		{
 			value: 0,
-			label: 'No Measures'
+			label: '0'
 		},
 		{
 			value: 50,
-			label: 'Recommend Closing'
+			label: '1'
 		},
 		{
 			value: 100,
-			label: 'Require Closing'
+			label: '2'
 		}
 	];
+
 	let closeInternationalTravel = [
 		{
 			value: 0,
-			label: 'No Measures'
+			label: '0'
 		},
 		{
 			value: 25,
-			label: 'Screening Arrivals'
+			label: '1'
 		},
 		{
 			value: 50,
-			label: 'Quarantine Arrivals'
+			label: '2'
 		},
 		{
 			value: 75,
-			label: 'Ban arrivals from some regions'
+			label: '3'
 		},
 		{
 			value: 100,
-			label: 'Ban all regions'
+			label: '4'
 		}
 	];
+
 	return (
 		<div className=" mt-3">
 			<div className="row">
-				<div className="col-md-6">
-					<div className=" card pr-5 pl-5 pb-1">
+				<div className="col-md-12">
+					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'School Closing'}
 							marks={schoolClosing}
@@ -113,8 +115,10 @@ export const ParametersForm = () => {
 						/>
 					</div>
 				</div>
-				<div className="col-md-6">
-					<div className=" card pr-5 pl-5 pb-1">
+			</div>
+			<div className="mt-3 row">
+				<div className="col-md-12">
+					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'Workspace Closing'}
 							marks={workspaceClosing}
@@ -126,8 +130,8 @@ export const ParametersForm = () => {
 				</div>
 			</div>
 			<div className="mt-3 row">
-				<div className="col-md-7">
-					<div className=" card pr-5 pl-5 pb-1">
+				<div className="col-md-12">
+					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'Restrictions On Gatherings'}
 							marks={restrictionsOnGatherings}
@@ -137,8 +141,11 @@ export const ParametersForm = () => {
 						/>
 					</div>
 				</div>
-				<div className="col-md-5">
-					<div className=" card pr-5 pl-5 pb-1">
+			</div>
+
+			<div className="mt-3 row">
+				<div className="col-md-12">
+					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'Close Public Transport'}
 							marks={closePT}
@@ -151,7 +158,7 @@ export const ParametersForm = () => {
 			</div>
 			<div className="mt-3 row">
 				<div className="col-md-12">
-					<div className=" card pr-5 pl-5 pb-1">
+					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'International Travel Controls'}
 							marks={closeInternationalTravel}

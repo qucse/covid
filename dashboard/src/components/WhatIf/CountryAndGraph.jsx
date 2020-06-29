@@ -7,7 +7,7 @@ export const CountryAndGraph = () => {
 		<div className="mt-3">
 			<div className="row">
 				<div className=" col-md-6">
-					<div className="card p-3">
+					<div className="card p-3" style={{ height: 118 }}>
 						<p style={{ fontSize: 20 }}>Country</p>
 						<Select
 							labelId="demo-simple-select-placeholder-label-label"
@@ -24,8 +24,8 @@ export const CountryAndGraph = () => {
 					</div>
 				</div>
 				<div className=" col-md-6">
-					<div className="card p-3">
-						<p style={{ fontSize: 20 }}>Graph</p>
+					<div className="card p-3" style={{ height: 118 }}>
+						<p style={{ fontSize: 20 }}>Metric</p>
 						<Select
 							labelId="demo-simple-select-placeholder-label-label"
 							id="demo-simple-select-placeholder-label"

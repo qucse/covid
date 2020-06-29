@@ -235,10 +235,18 @@ export const WhatIf = () => {
 		{ date: '2020/10/01', predicted: 2.2555602339062575 }
 	];
 	return (
-		<div className="container">
-			<ParametersForm />
-			<CountryAndGraph />
-			<Graph data={data} />
+		<div className="container-fluid">
+			<div className="row">
+				<div className="col-md-5">
+					<ParametersForm />
+				</div>
+
+				<div className="col-md-7">
+					<CountryAndGraph />
+
+					<Graph data={data} />
+				</div>
+			</div>
 		</div>
 	);
 };
