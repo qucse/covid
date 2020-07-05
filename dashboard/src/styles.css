@@ -19,3 +19,18 @@ body {
 .card:hover {
 	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1);
 }
+
+.case {
+	font-size: 18px;
+}
+
+.newCase {
+	font-size: 14px;
+	color: green;
+	margin-right: 5px;
+}
+
+#select {
+	height: 100%;
+	width: 100%;
+}

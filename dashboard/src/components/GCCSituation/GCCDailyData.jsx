@@ -1,8 +1,9 @@
 import React from 'react';
-import './InformationCard.css';
 import { Line } from 'react-chartjs-2';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
-export const DailyData = ({ data }) => {
+export const GCCDailyData = ({ data, country, setCountry }) => {
 	const info = {
 		labels: data[0],
 		datasets: [
@@ -71,13 +72,47 @@ export const DailyData = ({ data }) => {
 			}
 		]
 	};
+	const countries = [
+		{
+			value: 'saudi-arabia',
+			key: 'Saudi Arabia'
+		},
+		{
+			value: 'qatar',
+			key: 'Qatar'
+		},
 
+		{
+			value: 'united-arab-emirates',
+			key: 'United Arab Emirates'
+		},
+		{
+			value: 'kuwait',
+			key: 'Kuwait'
+		},
+		{
+			value: 'oman',
+			key: 'Oman'
+		},
+		{
+			value: 'bahrain',
+			key: 'Bahrain'
+		}
+	];
 	return (
 		<div className="card mt-5  pl-3 pr-3 pb-3">
 			<div className="card-container">
-				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
-					Daily Data
-				</p>
+				<Select
+					labelId="demo-simple-select-placeholder-label-label"
+					id="demo-simple-select-placeholder-label"
+					value={country}
+					onChange={(event) => {
+						setCountry(event.target.value);
+					}}
+					style={{ marginBottom: 12, marginTop: 10, width: '100%' }}
+				>
+					{countries.map((element) => <MenuItem value={element.value}>{element.key}</MenuItem>)}
+				</Select>
 				<Line data={info} />
 			</div>
 		</div>

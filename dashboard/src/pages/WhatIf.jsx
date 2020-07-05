@@ -237,13 +237,12 @@ export const WhatIf = () => {
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-md-5">
+				<div className="col-md-5 pr-0">
 					<ParametersForm />
 				</div>
 
 				<div className="col-md-7">
 					<CountryAndGraph />
-
 					<Graph data={data} />
 				</div>
 			</div>

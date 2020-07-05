@@ -1,19 +1,20 @@
 import React from 'react';
-import Slider from '@material-ui/core/Slider';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
-export const ParameterSlider = ({ marks, title, tooltip }) => {
-	function valuetext(value) {
-		return `${value}°C`;
+const theme = createMuiTheme({
+	overrides: {
+		MuiTooltip: {
+			tooltip: {
+				fontSize: 12,
+				backgroundColor: 'rgba(0, 0, 0)'
+			}
+		}
 	}
-
-	function valueLabelFormat(value) {
-		return marks[marks.findIndex((mark) => mark.value === value)].label;
-	}
-
+});
+export const ParameterSlider = ({ marks, title }) => {
 	return (
 		<div>
 			<div
@@ -22,21 +23,12 @@ export const ParameterSlider = ({ marks, title, tooltip }) => {
 					alignItems: 'baseline',
 					justifyContent: 'space-between',
 					marginBottom: 5,
-					paddingTop: 3
+					paddingTop: 3,
 				}}
 			>
-				<Tooltip
-					TransitionComponent={Fade}
-					TransitionProps={{ timeout: 600 }}
-					placement="right"
-					title={tooltip}
-				>
-					<p className="pb-1 pt-3" style={{ fontSize: 18, fontWeight: 900 }}>
-						{title}
-					</p>
-					{/* <ErrorOutlineIcon /> */}
-				</Tooltip>
-
+				<p className="pb-1 pt-3" style={{ fontSize: 18, fontWeight: 900 }}>
+					{title}
+				</p>
 				<TextField
 					id="date"
 					label="From"
@@ -55,15 +47,40 @@ export const ParameterSlider = ({ marks, title, tooltip }) => {
 					}}
 				/>
 			</div>
-			<Slider
-				defaultValue={0}
-				valueLabelFormat={valueLabelFormat}
-				getAriaValueText={valuetext}
-				aria-labelledby="discrete-slider-restrict"
-				step={null}
-				valueLabelDisplay="auto"
-				marks={marks}
-			/>
+
+			<div
+				className="btn-group btn-group-sm mb-2 mt-2"
+				role="group"
+				aria-label="Basic example"
+				style={{ width: '100%' }}
+			>
+				{marks.map(
+					(mark) =>
+						mark.tooltip ? (
+							<MuiThemeProvider theme={theme}>
+								<Tooltip title={mark.tooltip} TransitionComponent={Fade} placement="top">
+									<button
+										type="button"
+										className="btn btn-info"
+										value={mark.value}
+										style={{ fontSize: 15 }}
+									>
+										{mark.label}
+									</button>
+								</Tooltip>
+							</MuiThemeProvider>
+						) : (
+							<button
+								type="button"
+								className="btn btn-info"
+								value={mark.value}
+								style={{ fontSize: 15 }}
+							>
+								{mark.label}
+							</button>
+						)
+				)}
+			</div>
 		</div>
 	);
 };

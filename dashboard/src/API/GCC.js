@@ -7,7 +7,7 @@
  */
 
 const axios = require('axios').default;
-const countries = [ 'bahrain', 'united-arab-emirates', 'kuwait', 'oman', 'saudi-arabia', 'qatar' ];
+const countries = [ 'saudi-arabia', 'qatar', 'united-arab-emirates', 'kuwait', 'oman', 'bahrain' ];
 
 class GCC {
 	/**
@@ -27,7 +27,7 @@ class GCC {
 		let date = new Date(lastData.Date);
 		return {
 			country: lastData.Country,
-			date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+			date: `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`,
 			newConfirmed: lastData.Confirmed - previousLast.Confirmed,
 			confirmed: lastData.Confirmed,
 			newDeaths: lastData.Deaths - previousLast.Deaths,
@@ -36,6 +36,41 @@ class GCC {
 			recovered: lastData.Recovered,
 			active: lastData.Active
 		};
+	}
+
+	/**
+     * @description retrieve the daily data for a specific country
+     * 
+     * @param {string} country to retrieve the data for
+     * 
+     * @requires axios
+     * 
+     * @author Abdelmonem Mohamed
+     */
+	async getDailyForCountry(country) {
+		const response = await axios.get('https://api.covid19api.com/total/country/' + country);
+		let data = response.data;
+		let countryDailyData = [];
+		let dates = [];
+		let confirmed = [];
+		let deaths = [];
+		let recovered = [];
+		data.forEach((element, index) => {
+			if (element.Confirmed === 0 && element.Recovered === 0 && element.Deaths === 0) return;
+			let date = new Date(element.Date);
+			dates.push(`${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`);
+			if (index === 0) {
+				confirmed.push(element.Confirmed);
+				deaths.push(element.Deaths);
+				recovered.push(element.Recovered);
+			} else {
+				confirmed.push(element.Confirmed - data[index - 1].Confirmed);
+				deaths.push(element.Deaths - data[index - 1].Deaths);
+				recovered.push(element.Recovered - data[index - 1].Recovered);
+			}
+		});
+		countryDailyData.push(dates, confirmed, deaths, recovered);
+		return countryDailyData;
 	}
 
 	/**
