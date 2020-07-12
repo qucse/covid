@@ -54,7 +54,7 @@ class Qatar {
 		let dates = [];
 		let tests = [];
 		data.forEach((element, index) => {
-			dates.push(`${element.x.day}-${element.x.month}-${element.x.year}`);
+			dates.push(`${element.x.day}/${element.x.month}/${element.x.year}`);
 			if (index === 0) {
 				tests.push(0);
 				return;
@@ -79,7 +79,7 @@ class Qatar {
 		let data = response.data.records[0].fields;
 		let date = data.date.split('-');
 		return {
-			date: `${date[2]}-${date[1]}-${date[0]}`,
+			date: `${date[2]}/${date[1]}/${date[0]}`,
 			newConfirmed: data.number_of_new_positive_cases_in_last_24_hrs,
 			confirmed: data.total_number_of_positive_cases_to_date,
 			newRecovered: data.number_of_new_recovered_cases_in_last_24_hrs,

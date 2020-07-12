@@ -32,7 +32,7 @@ export const QatarSituation = () => {
 	}, []);
 
 	return latestInformation && dailyData && dailyTests ? (
-		<div className="container-fluid">
+		<div className="container">
 			<GeneralData data={latestInformation} />
 			<DailyData data={dailyData} />
 			<ActiveAndTests

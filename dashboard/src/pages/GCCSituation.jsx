@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import gcc from '../API/GCC';
+import React, { useEffect, useContext } from 'react';
 import LoadingScreen from 'react-loading-screen';
-import { Map } from '../components/GCCSituation/Map';
+import { MapAndBubble } from '../components/GCCSituation/MapAndBubble';
 import { Table } from '../components/GCCSituation/Table';
 import { LineAndStack } from '../components/GCCSituation/LineAndStack';
+import { Context as GCCContext } from '../contexts/GCCContext';
 
 export const GCCSituation = () => {
-	const [ GCCData, setGCCData ] = useState(null);
-	const [ countryData, setCountryData ] = useState(null);
-	const [ country, setCountry ] = useState('saudi-arabia');
-
-	async function getGCCData() {
-		let data = await gcc.getDataForAllGCC();
-		console.log(data);
-		setGCCData(data);
-	}
-
-	async function getCountryDailyDate(country) {
-		let data = await gcc.getDailyForCountry(country);
-		console.log(data);
-		setCountryData(data);
-	}
+	const {
+		state: { GCCData, country, scaleType, countryData, from, to },
+		getGCCData,
+		getCountryDailyData
+	} = useContext(GCCContext);
 
 	useEffect(() => {
 		getGCCData();
@@ -28,16 +18,17 @@ export const GCCSituation = () => {
 
 	useEffect(
 		() => {
-			getCountryDailyDate(country);
+			getCountryDailyData(country, scaleType, from, to);
 		},
-		[ country ]
+		[ country, scaleType, from, to ]
 	);
 
 	return GCCData && countryData ? (
-		<div className="container-fluid">
-			<Map data={GCCData} />
-			<LineAndStack StackData={GCCData} lineData={countryData} country={country} setCountry={setCountry} />
-			<Table data={GCCData} />
+		<div className="container-fluid mt-3">
+			<p>Last Updated On: {GCCData[0].date}</p>
+			<MapAndBubble />
+			<LineAndStack />
+			<Table />
 		</div>
 	) : (
 		<LoadingScreen

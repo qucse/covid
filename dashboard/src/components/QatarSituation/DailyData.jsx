@@ -78,7 +78,7 @@ export const DailyData = ({ data }) => {
 				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
 					Daily Data
 				</p>
-				<Line data={info} />
+				<Line data={info} options={{ scales: { yAxes: [ { type: 'linear' } ] } }} />
 			</div>
 		</div>
 	);

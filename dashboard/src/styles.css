@@ -24,13 +24,14 @@ body {
 	font-size: 18px;
 }
 
-.newCase {
+.newPositiveCase {
 	font-size: 14px;
 	color: green;
 	margin-right: 5px;
 }
 
-#select {
-	height: 100%;
-	width: 100%;
+.newNegativeCase {
+	font-size: 14px;
+	color: red;
+	margin-right: 5px;
 }

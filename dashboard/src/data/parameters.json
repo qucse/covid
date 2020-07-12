@@ -1,0 +1,28 @@
+
+{
+	"schoolClosing": {
+		"level": 0, // Ranging 0-3
+		"fromDate": "01/03/2020",
+		"toDate": "31/12/2020"
+	},
+	"workspaceClosing": {
+		"level": 0, // Ranging 0-3
+		"fromDate": "01/03/2020",
+		"toDate": "31/12/2020"
+	},
+	"restrictionsOnGatherings": {
+		"level": 0, // Ranging 0-4
+		"fromDate": "01/03/2020",
+		"toDate": "31/12/2020"
+	},
+	"closePublicTransport": {
+		"level": 0, // Ranging 0-2
+		"fromDate": "01/03/2020",
+		"toDate": "31/12/2020"
+	},
+	"internationalTravelControls": {
+		"level": 0, // Ranging 0-4
+		"fromDate": "01/03/2020",
+		"toDate": "31/12/2020"
+	}
+}

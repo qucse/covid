@@ -4,7 +4,7 @@ import { NavBar } from './components/NavBar';
 import { QatarSituation } from './pages/QatarSituation';
 import { WhatIf } from './pages/WhatIf';
 import { GCCSituation } from './pages/GCCSituation';
-
+import { Provider as GCCProvider } from './contexts/GCCContext';
 function App() {
 	return (
 		<Router>
@@ -14,7 +14,9 @@ function App() {
 					<QatarSituation />
 				</Route>
 				<Route path="/gcc">
-					<GCCSituation />
+					<GCCProvider>
+						<GCCSituation />
+					</GCCProvider>
 				</Route>
 				<Route path="/prediction">
 					<WhatIf />
