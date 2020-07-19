@@ -6,6 +6,7 @@ export const MapAndBubble = () => {
 	const { state: { GCCData } } = useContext(Context);
 	return (
 		<div className="">
+			<p>Last Updated On: {GCCData[0].date}</p>
 			<div className="row">
 				<div className="col-md-6">
 					<div className="card">

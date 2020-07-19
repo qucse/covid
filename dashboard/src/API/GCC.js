@@ -20,13 +20,13 @@ class GCC {
      * @author Abdelmonem Mohamed
      */
 	async getDataForCountry(country) {
-		const response = await axios.get('https://qu-covid19-api.herokuapp.com/api/covid19?country=' + country);
+		const response = await axios.get('https://api.covid19api.com/total/country/' + country);
 		let data = response.data;
 		let lastData = data[data.length - 1];
 		let previousLast = data[data.length - 2];
 		let date = new Date(lastData.Date);
 		return {
-			country: lastData.location,
+			country: lastData.Country,
 			date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
 			newConfirmed: lastData.Confirmed - previousLast.Confirmed,
 			confirmed: lastData.Confirmed,
@@ -96,7 +96,7 @@ class GCC {
      * @author Abdelmonem Mohamed
      */
 	async getDataForAllGCC() {
-		let countriesResult = gcc.map(async (country) => await this.getDataForCountry(country));
+		let countriesResult = countries.map(async (country) => await this.getDataForCountry(country));
 		return await Promise.all(countriesResult);
 	}
 }
