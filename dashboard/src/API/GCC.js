@@ -8,7 +8,6 @@
 
 const axios = require('axios').default;
 const countries = [ 'Saudi Arabia', 'Qatar', 'United Arab Emirates', 'Kuwait', 'Oman', 'Bahrain' ];
-const gcc = require('../data/GCC.json');
 class GCC {
 	/**
      * @description retrieve the data for a specific country
@@ -25,6 +24,7 @@ class GCC {
 		let lastData = data[data.length - 1];
 		let previousLast = data[data.length - 2];
 		let date = new Date(lastData.Date);
+
 		return {
 			country: lastData.Country,
 			date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,

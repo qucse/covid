@@ -5,11 +5,19 @@ import './styles.css';
 import App from './App.jsx';
 import * as serviceWorker from './serviceWorker';
 import { Provider as GCCProvider } from './contexts/GCCContext';
+import { Provider as QatarProvider } from './contexts/QatarContext';
+import DateFnsUtils from '@date-io/date-fns'; // choose your lib
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+
 ReactDOM.render(
 	<React.StrictMode>
-		<GCCProvider>
-			<App />
-		</GCCProvider>
+		<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<QatarProvider>
+				<GCCProvider>
+					<App />
+				</GCCProvider>
+			</QatarProvider>
+		</MuiPickersUtilsProvider>
 	</React.StrictMode>,
 	document.getElementById('root')
 );

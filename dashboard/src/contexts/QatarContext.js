@@ -1,53 +1,37 @@
 import createDataContext from './createDataContext';
-import gcc from '../API/GCC';
+import qatar from '../API/Qatar';
 
-const GCCReducer = (state, action) => {
+const QatarReducer = (state, action) => {
 	switch (action.type) {
-		case 'load_GCC_data':
-			console.log(action.payload);
-			return { ...state, GCCData: action.payload };
-		case 'load_country_data':
-			return { ...state, countryData: action.payload };
-		case 'change_country':
-			return { ...state, country: action.payload };
-		case 'change_scale_type':
-			return { ...state, scaleType: action.payload };
-		case 'change_from':
-			return { ...state, from: action.payload };
-		case 'change_to':
-			return { ...state, to: action.payload };
+		case 'load_qatar_data':
+			return { ...state, latestInformation: action.payload };
+		case 'load_qatar_daily':
+			return { ...state, dailyData: action.payload };
+		case 'load_qatar_tests':
+			return { ...state, dailyTests: action.payload };
 		default:
 			return state;
 	}
 };
 
-const getGCCData = (dispatch) => async () => {
-	let data = await gcc.getDataForAllGCC();
-	dispatch({ type: 'load_GCC_data', payload: data });
+const getLatestQatarData = (dispatch) => async () => {
+	let data = await qatar.getLatestQatarData();
+	dispatch({ type: 'load_qatar_data', payload: data });
 };
 
-const getCountryDailyData = (dispatch) => async (country, scaleType, from, to) => {
-	let data = await gcc.getDailyForCountry(country, scaleType, from, to);
-	dispatch({ type: 'load_country_data', payload: data });
+const getQatarDailyData = (dispatch) => async () => {
+	let data = await qatar.getQatarDailyData();
+	dispatch({ type: 'load_qatar_daily', payload: data });
 };
 
-const changeCountry = (dispatch) => (country) => {
-	dispatch({ type: 'change_country', payload: country });
-};
-
-const changeScaleType = (dispatch) => (scaleType) => {
-	dispatch({ type: 'change_scale_type', payload: scaleType });
-};
-const changeFrom = (dispatch) => (scaleType) => {
-	dispatch({ type: 'change_from', payload: scaleType });
-};
-const changeTo = (dispatch) => (scaleType) => {
-	dispatch({ type: 'change_to', payload: scaleType });
+const getQatarDailyTestsData = (dispatch) => async () => {
+	let data = await qatar.getQatarDailyTestsData();
+	dispatch({ type: 'load_qatar_tests', payload: data });
 };
 
 export const { Provider, Context } = createDataContext(
-	GCCReducer,
-	{ getGCCData, getCountryDailyData, changeCountry, changeScaleType, changeFrom, changeTo },
+	QatarReducer,
+	{ getLatestQatarData, getQatarDailyData, getQatarDailyTestsData },
 	{
 		latestInformation: null,
 		dailyData: null,

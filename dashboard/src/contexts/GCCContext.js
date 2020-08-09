@@ -4,7 +4,6 @@ import gcc from '../API/GCC';
 const GCCReducer = (state, action) => {
 	switch (action.type) {
 		case 'load_GCC_data':
-			console.log(action.payload);
 			return { ...state, GCCData: action.payload };
 		case 'load_country_data':
 			return { ...state, countryData: action.payload };
@@ -23,6 +22,7 @@ const GCCReducer = (state, action) => {
 
 const getGCCData = (dispatch) => async () => {
 	let data = await gcc.getDataForAllGCC();
+	console.log(data);
 	dispatch({ type: 'load_GCC_data', payload: data });
 };
 
@@ -51,9 +51,13 @@ export const { Provider, Context } = createDataContext(
 	{
 		GCCData: null,
 		countryData: null,
-		country: 'saudi-arabia',
-		scaleType: 'daily',
+		country: 'qatar',
+		scaleType: 'linear',
 		from: '2020-01-01',
-		to: `${new Date().getUTCFullYear()}-${new Date().getUTCMonth() + 1}-${new Date().getUTCDate()}`
+		to: `${new Date().getUTCFullYear()}-${new Date().getUTCMonth() + 1 < 10
+			? `0${new Date().getUTCMonth() + 1}`
+			: new Date().getUTCDate() + 1}-${new Date().getUTCDate() + 1 < 10
+			? `0${new Date().getUTCDate() + 1}`
+			: new Date().getUTCDate() + 1}`
 	}
 );

@@ -5,6 +5,7 @@ import { QatarSituation } from './pages/QatarSituation';
 import { WhatIf } from './pages/WhatIf';
 import { GCCSituation } from './pages/GCCSituation';
 import { Context as GCCContext } from './contexts/GCCContext';
+import { Context as QatarContext } from './contexts/QatarContext';
 import LoadingScreen from 'react-loading-screen';
 
 function App() {
@@ -14,8 +15,18 @@ function App() {
 		getCountryDailyData
 	} = useContext(GCCContext);
 
+	const {
+		state: { latestInformation, dailyData, dailyTests },
+		getLatestQatarData,
+		getQatarDailyData,
+		getQatarDailyTestsData
+	} = useContext(QatarContext);
+
 	useEffect(() => {
 		getGCCData();
+		getLatestQatarData();
+		getQatarDailyData();
+		getQatarDailyTestsData();
 	}, []);
 
 	useEffect(
@@ -24,7 +35,7 @@ function App() {
 		},
 		[ country, scaleType, from, to ]
 	);
-	return GCCData && countryData ? (
+	return GCCData && countryData && latestInformation && dailyData && dailyTests ? (
 		<Router>
 			<NavBar />
 			<Switch>

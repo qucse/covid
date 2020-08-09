@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './InformationCard.css';
 import { Line } from 'react-chartjs-2';
+import { Context } from '../../contexts/QatarContext';
 
-export const DailyData = ({ data }) => {
+export const DailyData = () => {
+	const { state: { dailyData } } = useContext(Context);
+
 	const info = {
-		labels: data[0],
+		labels: dailyData[0],
 		datasets: [
 			{
 				label: 'Confirmed',
@@ -25,7 +28,7 @@ export const DailyData = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: data[1]
+				data: dailyData[1]
 			},
 			{
 				label: 'Recovered',
@@ -46,7 +49,7 @@ export const DailyData = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: data[3]
+				data: dailyData[3]
 			},
 			{
 				label: 'Death',
@@ -67,7 +70,7 @@ export const DailyData = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: data[2]
+				data: dailyData[2]
 			}
 		]
 	};

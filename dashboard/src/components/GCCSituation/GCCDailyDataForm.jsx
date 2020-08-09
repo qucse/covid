@@ -2,18 +2,24 @@ import React, { useContext } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Context } from '../../contexts/GCCContext';
-import TextField from '@material-ui/core/TextField';
+import { DatePicker } from '@material-ui/pickers';
 
 export const GCCDailyDataForm = () => {
-	const { state: { country, scaleType }, changeCountry, changeScaleType, changeFrom, changeTo } = useContext(Context);
+	const {
+		state: { country, scaleType, from, to },
+		changeCountry,
+		changeScaleType,
+		changeFrom,
+		changeTo
+	} = useContext(Context);
 	const countries = [
-		{
-			value: 'saudi-arabia',
-			key: 'Saudi Arabia'
-		},
 		{
 			value: 'qatar',
 			key: 'Qatar'
+		},
+		{
+			value: 'saudi-arabia',
+			key: 'Saudi Arabia'
 		},
 
 		{
@@ -35,20 +41,18 @@ export const GCCDailyDataForm = () => {
 	];
 	const scaleTypes = [
 		{
+			value: 'linear',
+			key: 'Linear'
+		},
+		{
 			value: 'daily',
 			key: 'Daily'
 		},
 		{
 			value: 'logarithmic',
 			key: 'Logarithmic'
-		},
-
-		{
-			value: 'linear',
-			key: 'Linear'
 		}
 	];
-
 	return (
 		<React.Fragment>
 			<div className="row mt-2" style={{ width: '100%' }}>
@@ -88,21 +92,41 @@ export const GCCDailyDataForm = () => {
 			<div className="row mt-3 mb-3" style={{ width: '100%' }}>
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
 					<p style={{ marginRight: 20 }}>From:</p>
-					<TextField
-						type="date"
+					<DatePicker
+						disableToolbar
+						allowKeyboardControl
+						variant="inline"
+						format="dd/MM/yyyy"
 						style={{ width: '100%' }}
-						onChange={(event) => {
-							changeFrom(event.target.value);
+						value={from}
+						onChange={(date) => {
+							changeFrom(
+								`${date.getUTCFullYear()}-${date.getUTCMonth() + 1 < 10
+									? `0${date.getUTCMonth() + 1}`
+									: date.getUTCDate() + 1}-${date.getUTCDate() + 1 < 10
+									? `0${date.getUTCDate() + 1}`
+									: date.getUTCDate() + 1}`
+							);
 						}}
 					/>
 				</div>
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
 					<p style={{ marginRight: 20 }}>To:</p>
-					<TextField
+					<DatePicker
+						disableToolbar
+						allowKeyboardControl
+						variant="inline"
+						format="dd/MM/yyyy"
 						style={{ width: '100%' }}
-						type="date"
-						onChange={(event) => {
-							changeTo(event.target.value);
+						value={to}
+						onChange={(date) => {
+							changeTo(
+								`${date.getUTCFullYear()}-${date.getUTCMonth() + 1 < 10
+									? `0${date.getUTCMonth() + 1}`
+									: date.getUTCDate() + 1}-${date.getUTCDate() + 1 < 10
+									? `0${date.getUTCDate() + 1}`
+									: date.getUTCDate() + 1}`
+							);
 						}}
 					/>
 				</div>

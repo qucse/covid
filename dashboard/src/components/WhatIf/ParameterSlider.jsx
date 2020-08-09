@@ -3,6 +3,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { DatePicker } from '@material-ui/pickers';
 
 const theme = createMuiTheme({
 	overrides: {
@@ -23,28 +24,26 @@ export const ParameterSlider = ({ marks, title }) => {
 					alignItems: 'baseline',
 					justifyContent: 'space-between',
 					marginBottom: 5,
-					paddingTop: 3,
+					paddingTop: 3
 				}}
 			>
 				<p className="pb-1 pt-3" style={{ fontSize: 18, fontWeight: 900 }}>
 					{title}
 				</p>
-				<TextField
-					id="date"
+				<DatePicker
+					disableToolbar
+					allowKeyboardControl
 					label="From"
-					type="date"
-					fullWidth={false}
-					InputLabelProps={{
-						shrink: true
-					}}
+					variant="inline"
+					format="dd/MM/yyyy"
+					style={{ marginRight: 3}}
 				/>
-				<TextField
-					id="date"
+				<DatePicker
+					disableToolbar
+					allowKeyboardControl
 					label="To"
-					type="date"
-					InputLabelProps={{
-						shrink: true
-					}}
+					variant="inline"
+					format="dd/MM/yyyy"
 				/>
 			</div>
 
@@ -70,12 +69,7 @@ export const ParameterSlider = ({ marks, title }) => {
 								</Tooltip>
 							</MuiThemeProvider>
 						) : (
-							<button
-								type="button"
-								className="btn btn-info"
-								value={mark.value}
-								style={{ fontSize: 15 }}
-							>
+							<button type="button" className="btn btn-info" value={mark.value} style={{ fontSize: 15 }}>
 								{mark.label}
 							</button>
 						)
