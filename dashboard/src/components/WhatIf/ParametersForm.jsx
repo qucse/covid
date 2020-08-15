@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ParameterSlider } from './ParameterSlider';
-
+import { Context } from '../../contexts/whatIfContext';
 export const ParametersForm = () => {
-	let schoolClosing = [
+	const {
+		state: {
+			schoolClosing,
+			workspaceClosing,
+			restrictionsOnGatherings,
+			internationalTravelControls,
+			closePublicTransport
+		},
+		changeSchoolClosing,
+		changeWorkspaceClosing,
+		changeClosePublicTransport,
+		changeInternationalTravelControls,
+		changeRestrictionsOnGatherings
+	} = useContext(Context);
+
+	let school = [
 		{
 			value: 0,
 			label: 'No Measures',
@@ -24,7 +39,7 @@ export const ParametersForm = () => {
 		}
 	];
 
-	let workspaceClosing = [
+	let workspace = [
 		{
 			value: 0,
 			label: 'No Measures',
@@ -47,7 +62,7 @@ export const ParametersForm = () => {
 		}
 	];
 
-	let restrictionsOnGatherings = [
+	let gatherings = [
 		{
 			value: 0,
 			label: 'No Measures',
@@ -75,7 +90,7 @@ export const ParametersForm = () => {
 		}
 	];
 
-	let closePT = [
+	let PT = [
 		{
 			value: 0,
 			label: 'No Measures',
@@ -92,7 +107,7 @@ export const ParametersForm = () => {
 			tooltip: 'Require closing (or prohibit most citizens from using it)'
 		}
 	];
-	let closeInternationalTravel = [
+	let internationalTravel = [
 		{
 			value: 0,
 			label: 'No Measures',
@@ -100,11 +115,12 @@ export const ParametersForm = () => {
 		},
 		{
 			value: 1,
-			label: 'Screen Check'
+			label: 'Screening',
+			tooltip: 'Screen Check'
 		},
 		{
 			value: 2,
-			label: 'Quarantine Arrivals',
+			label: 'Quarantine',
 			tooltip: 'Quarantine arrivals from some or all regions'
 		},
 		{
@@ -124,7 +140,12 @@ export const ParametersForm = () => {
 			<div className="row">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
-						<ParameterSlider title={'School Closing'} marks={schoolClosing} />
+						<ParameterSlider
+							title={'School Closing'}
+							marks={school}
+							object={schoolClosing}
+							onChange={changeSchoolClosing}
+						/>
 					</div>
 				</div>
 			</div>
@@ -133,10 +154,9 @@ export const ParametersForm = () => {
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
 							title={'Workspace Closing'}
-							marks={workspaceClosing}
-							tooltip={
-								'0 - no measures 1 - recommend closing (or recommend work from home) 2 - require closing (or work from home) for some sectors or categories of workers 3 - require closing (or work from home) for all-but-essential workplaces (eg grocery stores, doctors)'
-							}
+							marks={workspace}
+							object={workspaceClosing}
+							onChange={changeWorkspaceClosing}
 						/>
 					</div>
 				</div>
@@ -144,7 +164,12 @@ export const ParametersForm = () => {
 			<div className="mt-3 row">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
-						<ParameterSlider title={'Restrictions On Gatherings'} marks={restrictionsOnGatherings} />
+						<ParameterSlider
+							title={'Restrictions On Gatherings'}
+							onChange={changeRestrictionsOnGatherings}
+							object={restrictionsOnGatherings}
+							marks={gatherings}
+						/>
 					</div>
 				</div>
 			</div>
@@ -152,14 +177,24 @@ export const ParametersForm = () => {
 			<div className="mt-3 row">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
-						<ParameterSlider title={'Close Public Transport'} marks={closePT} />
+						<ParameterSlider
+							title={'Close Public Transport'}
+							marks={PT}
+							onChange={changeClosePublicTransport}
+							object={closePublicTransport}
+						/>
 					</div>
 				</div>
 			</div>
 			<div className="mt-3 row">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
-						<ParameterSlider title={'International Travel Controls'} marks={closeInternationalTravel} />
+						<ParameterSlider
+							title={'Travel Controls'}
+							onChange={changeInternationalTravelControls}
+							marks={internationalTravel}
+							object={internationalTravelControls}
+						/>
 					</div>
 				</div>
 			</div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { DatePicker } from '@material-ui/pickers';
 
@@ -15,14 +14,14 @@ const theme = createMuiTheme({
 		}
 	}
 });
-export const ParameterSlider = ({ marks, title }) => {
+export const ParameterSlider = ({ marks, title, object, onChange }) => {
 	return (
 		<div>
 			<div
 				style={{
 					display: 'flex',
 					alignItems: 'baseline',
-					justifyContent: 'space-between',
+					justifyContent: 'space-around',
 					marginBottom: 5,
 					paddingTop: 3
 				}}
@@ -33,45 +32,71 @@ export const ParameterSlider = ({ marks, title }) => {
 				<DatePicker
 					disableToolbar
 					allowKeyboardControl
-					label="From"
 					variant="inline"
+					label={'From'}
 					format="dd/MM/yyyy"
-					style={{ marginRight: 3}}
+					style={{ marginRight: 3 }}
+					value={object.fromDate}
+					onChange={(date) => {
+						let month = date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
+						let ndate = date.getUTCDate();
+						let year = date.getUTCFullYear();
+						let newDate = `${year}-${month}-${ndate}`;
+						onChange({ ...object, fromDate: newDate });
+					}}
 				/>
 				<DatePicker
 					disableToolbar
 					allowKeyboardControl
-					label="To"
+					label={'To'}
 					variant="inline"
 					format="dd/MM/yyyy"
+					value={object.toDate}
+					onChange={(date) => {
+						let month = date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
+						let ndate = date.getUTCDate();
+						let year = date.getUTCFullYear();
+						let newDate = `${year}-${month}-${ndate}`;
+						onChange({ ...object, toDate: newDate });
+					}}
 				/>
 			</div>
 
-			<div
-				className="btn-group btn-group-sm mb-2 mt-2"
-				role="group"
-				aria-label="Basic example"
-				style={{ width: '100%' }}
-			>
+			<div className="btn-group btn-group-sm mb-1 mt-1" role="group" style={{ width: '100%' }}>
 				{marks.map(
-					(mark) =>
+					(mark, key) =>
 						mark.tooltip ? (
-							<MuiThemeProvider theme={theme}>
+							<MuiThemeProvider theme={theme} key={key}>
 								<Tooltip title={mark.tooltip} TransitionComponent={Fade} placement="top">
-									<button
-										type="button"
-										className="btn btn-info"
-										value={mark.value}
-										style={{ fontSize: 15 }}
-									>
-										{mark.label}
-									</button>
+									<label className="btn btn-info">
+										<input
+											type="radio"
+											name={object.name}
+											value={mark.value}
+											key={key}
+											defaultChecked={object.level === mark.value ? true : false}
+											onClick={(event) => {
+												onChange({ ...object, level: parseInt(event.target.value) });
+											}}
+										/>
+										{' ' + mark.label}
+									</label>
 								</Tooltip>
 							</MuiThemeProvider>
 						) : (
-							<button type="button" className="btn btn-info" value={mark.value} style={{ fontSize: 15 }}>
-								{mark.label}
-							</button>
+							<label className="btn btn-info" key={key}>
+								<input
+									type="radio"
+									name={object.name}
+									key={key}
+									value={mark.value}
+									defaultChecked={object.level === mark.value ? true : false}
+									onClick={(event) => {
+										onChange({ ...object, level: parseInt(event.target.value) });
+									}}
+								/>
+								{' ' + mark.label}
+							</label>
 						)
 				)}
 			</div>

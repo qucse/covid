@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Line } from 'react-chartjs-2';
+import { Context as QatarContext } from '../../contexts/QatarContext';
+import { Context as whatIfContext } from '../../contexts/whatIfContext';
+import moment from 'moment';
 
-export const Graph = ({ data }) => {
-	let predicted = [],
-		dates = [],
-		actual = [];
+export const Graph = () => {
+	const { state: { dailyData } } = useContext(QatarContext);
+	const { state: { predictions } } = useContext(whatIfContext);
+	let dates = [];
+	let currDate = moment.utc(new Date('5/1/2020')).startOf('day');
+	let lastDate = moment.utc(new Date('1/2/2021')).startOf('day');
 
-	data.forEach((element) => {
-		dates.push(element.date);
-		predicted.push(element.predicted);
-		if (element.observed) actual.push(element.observed);
-	});
+	while (currDate.add(1, 'days').diff(lastDate) < 0) {
+		let date = currDate.clone().toDate().toISOString();
+		date = date.substring(0, date.indexOf('T'));
+		date = date.split('-');
+		dates.push(`${date[2]}/${date[1]}/${date[0]}`);
+	}
+	dates.push(currDate.clone().toDate());
 
 	const info = {
-		labels: dates,
+		labels: dates.slice(0, dailyData[1].slice(dailyData[0].indexOf('1/5/2020')).length - 1 + 45),
 		datasets: [
 			{
 				label: 'Actual',
@@ -34,7 +41,7 @@ export const Graph = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: actual
+				data: dailyData[1].slice(dailyData[0].indexOf('1/5/2020'))
 			},
 			{
 				label: 'Predicted',
@@ -55,16 +62,16 @@ export const Graph = ({ data }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: predicted
+				data: predictions.data.slice(0, dailyData[1].slice(dailyData[0].indexOf('1/5/2020')).length - 1 + 45)
 			}
 		]
 	};
 
 	return (
-		<div className="card mt-3 mb-4 pl-3 pr-3 pb-4">
+		<div className="card mt-3 pl-3 pr-3">
 			<div className="card-container">
-				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
-				Actual Vs. Predicted
+				<p className="title" style={{ fontSize: 30 }}>
+					Actual Vs. Predicted
 				</p>
 				<Line data={info} />
 			</div>

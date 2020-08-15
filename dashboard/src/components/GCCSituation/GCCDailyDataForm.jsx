@@ -55,7 +55,7 @@ export const GCCDailyDataForm = () => {
 	];
 	return (
 		<React.Fragment>
-			<div className="row mt-2" style={{ width: '100%' }}>
+			<div className="row mt-2 mb-3" style={{ width: '100%' }}>
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
 					<p style={{ marginRight: 20 }}>Country:</p>
 					<Select
@@ -89,7 +89,7 @@ export const GCCDailyDataForm = () => {
 					</Select>
 				</div>
 			</div>
-			<div className="row mt-3 mb-3" style={{ width: '100%' }}>
+			{/* <div className="row mt-3 mb-3" style={{ width: '100%' }}>
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
 					<p style={{ marginRight: 20 }}>From:</p>
 					<DatePicker
@@ -100,13 +100,14 @@ export const GCCDailyDataForm = () => {
 						style={{ width: '100%' }}
 						value={from}
 						onChange={(date) => {
-							changeFrom(
-								`${date.getUTCFullYear()}-${date.getUTCMonth() + 1 < 10
-									? `0${date.getUTCMonth() + 1}`
-									: date.getUTCDate() + 1}-${date.getUTCDate() + 1 < 10
-									? `0${date.getUTCDate() + 1}`
-									: date.getUTCDate() + 1}`
-							);
+							let month =
+								date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
+							let ndate =
+								date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate() + 1}` : date.getUTCDate() + 1;
+							let year = date.getUTCFullYear();
+							let newDate = `${year}-${month}-${ndate}`;
+							console.log(newDate);
+							changeFrom(newDate);
 						}}
 					/>
 				</div>
@@ -120,17 +121,18 @@ export const GCCDailyDataForm = () => {
 						style={{ width: '100%' }}
 						value={to}
 						onChange={(date) => {
-							changeTo(
-								`${date.getUTCFullYear()}-${date.getUTCMonth() + 1 < 10
-									? `0${date.getUTCMonth() + 1}`
-									: date.getUTCDate() + 1}-${date.getUTCDate() + 1 < 10
-									? `0${date.getUTCDate() + 1}`
-									: date.getUTCDate() + 1}`
-							);
+							let month =
+								date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
+							let ndate =
+								date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate() + 1}` : date.getUTCDate() + 1;
+							let year = date.getUTCFullYear();
+							let newDate = `${year}-${month}-${ndate}`;
+							console.log(newDate);
+							changeTo(newDate);
 						}}
 					/>
-				</div>
-			</div>
+				</div> 
+			</div>*/}
 		</React.Fragment>
 	);
 };

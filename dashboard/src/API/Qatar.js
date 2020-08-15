@@ -28,7 +28,7 @@ class Qatar {
 		let deaths = [];
 		let recovered = [];
 		data.forEach((element) => {
-			dates.push(`${element.x.day}-${element.x.month}-${element.x.year}`);
+			dates.push(`${element.x.day}/${element.x.month}/${element.x.year}`);
 			confirmed.push(element.cases);
 			deaths.push(element.deaths);
 			recovered.push(element.recovery);
@@ -72,14 +72,17 @@ class Qatar {
      * 
      * @author Abdelmonem Mohamed
      */
-	async getLatestQatarData() {
-		let response = await axios.get(
-			'https://www.data.gov.qa/api/records/1.0/search/?sort=date&rows=1&dataset=covid-19-cases-in-qatar&timezone=Asia%2FBaghdad&lang=en#'
-		);
+	async getLatestQatarData(toDate) {
+		let url;
+		toDate
+			? (url = `https://www.data.gov.qa/api/records/1.0/search/?dataset=covid-19-cases-in-qatar&q=date=${toDate}`)
+			: (url =
+					'https://www.data.gov.qa/api/records/1.0/search/?sort=date&rows=1&dataset=covid-19-cases-in-qatar&timezone=Asia%2FBaghdad&lang=en#');
+		let response = await axios.get(url);
 		let data = response.data.records[0].fields;
-		let date = data.date.split('-');
+		let str = response.data.records[0].record_timestamp;
 		return {
-			date: `${date[2]}/${date[1]}/${date[0]}`,
+			date: data.date,
 			newConfirmed: data.number_of_new_positive_cases_in_last_24_hrs,
 			confirmed: data.total_number_of_positive_cases_to_date,
 			newRecovered: data.number_of_new_recovered_cases_in_last_24_hrs,
@@ -95,9 +98,10 @@ class Qatar {
 				data.total_number_of_acute_cases_under_hospital_treatment_jmly_dd_lhlt_lhd_tht_l_lj_fy_lmstshf,
 			totalActiveCases: data.total_number_of_active_cases_undergoing_treatment_to_date,
 			newTests: data.number_of_new_tests_in_last_24_hrs,
-			totalTests: data.total_number_of_tests_to_date
+			totalTests: data.total_number_of_tests_to_date,
+			lastUpdatedOn: str.substring(0, str.indexOf('T'))
 		};
 	}
 }
 
-module.exports = new Qatar();
+export default new Qatar();

@@ -7,11 +7,40 @@ import hospital from '../../assets/images/hospital.svg';
 import test from '../../assets/images/test.svg';
 import dead from '../../assets/images/dead.png';
 import { Context } from '../../contexts/QatarContext';
+import { DatePicker } from '@material-ui/pickers';
+
 export const GeneralData = () => {
-	const { state: { latestInformation } } = useContext(Context);
+	const { state: { latestInformation, toDate, originalDate }, onDateChange } = useContext(Context);
+	let datee = originalDate.split('-');
+	let last = `${datee[2]}/${datee[1]}/${datee[0]}`;
 	return (
 		<div className="mt-3">
-			<p>Last Updated On: {latestInformation.date}</p>
+			<div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 5 }}>
+				<p>Last Updated On: {last}</p>
+				<div style={{ display: 'flex', alignItems: 'baseline' }}>
+					<p style={{ marginRight: 10 }}>Get Data Until:</p>
+					<DatePicker
+						disableToolbar
+						allowKeyboardControl
+						defaultValue={last}
+						format="dd/MM/yyyy"
+						value={toDate}
+						variant="inline"
+						onChange={(date) => {
+							let month =
+								date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
+							let ndate = date.getUTCDate();
+							let year = date.getUTCFullYear();
+							let newDate = `${year}-${month}-${ndate}`;
+							if (new Date(newDate) > new Date(originalDate)) alert(`Please Select Date before ${last}`);
+							else if (new Date(newDate) < new Date('2020-02-29'))
+								alert(`Please Select Date After 29/02/2020`);
+							else onDateChange(newDate);
+						}}
+						style={{ marginRight: 3 }}
+					/>
+				</div>
+			</div>
 			<div className="row">
 				<div className="col-md-4">
 					<InformationCard

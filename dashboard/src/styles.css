@@ -35,3 +35,16 @@ body {
 	color: red;
 	margin-right: 5px;
 }
+
+.page {
+	position: fixed;
+	padding: 0;
+	margin: 0;
+
+	top: 0;
+	left: 0;
+
+	width: 100%;
+	height: 100%;
+	background: #f2f4f5;
+}

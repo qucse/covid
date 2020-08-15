@@ -1,53 +1,48 @@
-/**
- * @description A helper fille to retrieve all the required COVID-19 information for all GCC countries 
- * using an open source API https://covid19api.com/
- * 
- * 
- * @author Abdelmonem Mohamed
- */
-
 const axios = require('axios').default;
 const countries = [ 'Saudi Arabia', 'Qatar', 'United Arab Emirates', 'Kuwait', 'Oman', 'Bahrain' ];
 class GCC {
-	/**
-     * @description retrieve the data for a specific country
-     * 
-     * @param {string} country to retrieve the data for
-     * 
-     * @requires axios
-     * 
-     * @author Abdelmonem Mohamed
-     */
-	async getDataForCountry(country) {
-		const response = await axios.get('https://api.covid19api.com/total/country/' + country);
-		let data = response.data;
-		let lastData = data[data.length - 1];
-		let previousLast = data[data.length - 2];
-		let date = new Date(lastData.Date);
-
-		return {
-			country: lastData.Country,
-			date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
-			newConfirmed: lastData.Confirmed - previousLast.Confirmed,
-			confirmed: lastData.Confirmed,
-			newDeaths: lastData.Deaths - previousLast.Deaths,
-			deaths: lastData.Deaths,
-			newRecovered: lastData.Recovered - previousLast.Recovered,
-			recovered: lastData.Recovered,
-			active: lastData.Active,
-			newActive: lastData.Active - previousLast.Active
-		};
+	async getDataForCountry(country, toDate) {
+		try {
+			const response = await axios.get('https://qu-covid19-api.herokuapp.com/data?country=' + country);
+			let data = response.data;
+			let lastData;
+			let previousLast;
+			let index;
+			if (toDate) {
+				data.forEach((element, k) => {
+					if (element.date == toDate) index = k;
+				});
+				lastData = data[index];
+				previousLast = data[--index];
+			} else {
+				lastData = data[data.length - 1];
+				previousLast = data[data.length - 3];
+			}
+			let active = lastData.confirmed - (lastData.recovered + lastData.deaths);
+			let previousActive = previousLast.confirmed - (previousLast.recovered + previousLast.deaths);
+			return {
+				country: lastData.administrative_area_level_1,
+				date: lastData.date,
+				newConfirmed: lastData.confirmed - previousLast.confirmed,
+				confirmed: lastData.confirmed,
+				newDeaths: lastData.deaths - previousLast.deaths,
+				deaths: lastData.deaths,
+				newRecovered: lastData.recovered - previousLast.recovered,
+				recovered: lastData.recovered,
+				active: lastData.confirmed - (lastData.recovered + lastData.deaths),
+				newActive: active - previousActive,
+				schoolClosing: lastData.school_closing,
+				workspaceClosing: lastData.workplace_closing,
+				restrictionsOnGatherings: lastData.gatherings_restrictions,
+				closePublicTransport: lastData.transport_closing,
+				internationalTravelControls: lastData.international_movement_restrictions,
+				lastUpdated: lastData.lastUpdated
+			};
+		} catch (error) {
+			return error;
+		}
 	}
 
-	/**
-     * @description retrieve the daily data for a specific country
-     * 
-     * @param {string} country to retrieve the data for
-     * 
-     * @requires axios
-     * 
-     * @author Abdelmonem Mohamed
-     */
 	async getDailyForCountry(country, cartesian, from, to) {
 		let url = 'https://api.covid19api.com/total/country/' + country + `?from=${from}&to=${to}`;
 		const response = await axios.get(url);
@@ -87,18 +82,13 @@ class GCC {
 
 		return countryDailyData;
 	}
-
-	/**
-     * @description retrieve all the data for all the gGCC countries 'bahrain', 'united-arab-emirates', 'kuwait', 'oman', 'saudi-arabia', * 'qatar' 
-     * 
-     * @requires axios
-     * 
-     * @author Abdelmonem Mohamed
-     */
-	async getDataForAllGCC() {
-		let countriesResult = countries.map(async (country) => await this.getDataForCountry(country));
+	async getDataForAllGCC(toDate) {
+		let countriesResult = countries.map(async (country) => await this.getDataForCountry(country, toDate));
 		return await Promise.all(countriesResult);
 	}
 }
 
-module.exports = new GCC();
+export default new GCC();
+// let m = new GCC();
+
+// m.getDataForCountry('Qatar', '2020-04-06').then((k) => console.log(k));

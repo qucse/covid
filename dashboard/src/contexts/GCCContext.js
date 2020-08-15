@@ -4,7 +4,7 @@ import gcc from '../API/GCC';
 const GCCReducer = (state, action) => {
 	switch (action.type) {
 		case 'load_GCC_data':
-			return { ...state, GCCData: action.payload };
+			return { ...state, GCCData: action.payload, gccChange: false, originalDate: action.payload[0].lastUpdated };
 		case 'load_country_data':
 			return { ...state, countryData: action.payload };
 		case 'change_country':
@@ -14,16 +14,17 @@ const GCCReducer = (state, action) => {
 		case 'change_from':
 			return { ...state, from: action.payload };
 		case 'change_to':
-			return { ...state, to: action.payload };
+			return { ...state, to: action.payload, gccChange: true };
 		default:
 			return state;
 	}
 };
 
-const getGCCData = (dispatch) => async () => {
-	let data = await gcc.getDataForAllGCC();
-	console.log(data);
-	dispatch({ type: 'load_GCC_data', payload: data });
+const getGCCData = (dispatch) => async (toDate) => {
+	try {
+		let data = await gcc.getDataForAllGCC(toDate);
+		dispatch({ type: 'load_GCC_data', payload: data });
+	} catch (error) {}
 };
 
 const getCountryDailyData = (dispatch) => async (country, scaleType, from, to) => {
@@ -50,14 +51,12 @@ export const { Provider, Context } = createDataContext(
 	{ getGCCData, getCountryDailyData, changeCountry, changeScaleType, changeFrom, changeTo },
 	{
 		GCCData: null,
+		originalDate: null,
 		countryData: null,
 		country: 'qatar',
 		scaleType: 'linear',
 		from: '2020-01-01',
-		to: `${new Date().getUTCFullYear()}-${new Date().getUTCMonth() + 1 < 10
-			? `0${new Date().getUTCMonth() + 1}`
-			: new Date().getUTCDate() + 1}-${new Date().getUTCDate() + 1 < 10
-			? `0${new Date().getUTCDate() + 1}`
-			: new Date().getUTCDate() + 1}`
+		to: null,
+		gccChange: false
 	}
 );
