@@ -47,7 +47,7 @@ export const ColumnChart = ({ data }) => {
 	return (
 		<div className="card mt-5 pl-3 pr-3 pb-3 ">
 			<div className="card-container">
-				<p style={{ fontSize: 27, marginTop:6, marginBottom:8 }}>Commutative Data</p>
+				<p style={{ fontSize: 27, marginTop:6, marginBottom:8 }}>Cumulative Data</p>
 				<Bar data={info} />
 			</div>
 		</div>

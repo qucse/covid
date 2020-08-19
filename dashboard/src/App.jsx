@@ -31,7 +31,7 @@ function App() {
 	} = useContext(GCCContext);
 
 	const {
-		state: { latestInformation, dailyData, dailyTests, toDate },
+		state: { latestInformation, dailyData, dailyTests, toDate, qatarChange },
 		getLatestQatarData,
 		getQatarDailyData,
 		getQatarDailyTestsData
@@ -42,16 +42,14 @@ function App() {
 			getCountryDailyData(country, scaleType, from, to);
 			getGCCData(to);
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ country, scaleType, from, to ]
 	);
-	useEffect(() => {
-		getQatarDailyData();
-		getQatarDailyTestsData();
-	}, []);
-
 	useEffect(
 		() => {
 			getLatestQatarData(toDate);
+			getQatarDailyData(toDate);
+			getQatarDailyTestsData(toDate);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ toDate ]
@@ -73,15 +71,12 @@ function App() {
 		]
 	);
 
-	useEffect(
-		() => {
-			getCountryDailyData(country, scaleType, from, to);
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ country, scaleType, from, to ]
-	);
 	return GCCData && countryData && latestInformation && dailyData && dailyTests && predictions ? (
-		<LoadingOverlay active={whatIfChange || gccChange} spinner text="Loading Your Customized Data...">
+		<LoadingOverlay
+			active={whatIfChange || gccChange || qatarChange}
+			spinner
+			text="Applying Your Customized Data..."
+		>
 			<Router>
 				<NavBar />
 				<Switch>

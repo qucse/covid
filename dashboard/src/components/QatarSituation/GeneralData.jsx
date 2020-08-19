@@ -11,14 +11,21 @@ import { DatePicker } from '@material-ui/pickers';
 
 export const GeneralData = () => {
 	const { state: { latestInformation, toDate, originalDate }, onDateChange } = useContext(Context);
-	let datee = originalDate.split('-');
-	let last = `${datee[2]}/${datee[1]}/${datee[0]}`;
+	let datee = new Date(originalDate);
+	let last = `${datee.getUTCDate()}/${datee.getUTCMonth() +
+		1}/${datee.getFullYear()} ${datee.getHours()}:${datee.getMinutes()}:${datee.getSeconds()}`;
 	return (
 		<div className="mt-3">
-			<div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 5 }}>
-				<p>Last Updated On: {last}</p>
+			<div
+				style={{
+					display: 'flex',
+					alignItems: 'baseline',
+					justifyContent: 'space-between',
+					marginBottom: 5
+				}}
+			>
 				<div style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 10 }}>Get Data Until:</p>
+					<p style={{ marginRight: 10 }}>Situation On:</p>
 					<DatePicker
 						disableToolbar
 						allowKeyboardControl
@@ -32,14 +39,17 @@ export const GeneralData = () => {
 							let ndate = date.getUTCDate();
 							let year = date.getUTCFullYear();
 							let newDate = `${year}-${month}-${ndate}`;
-							if (new Date(newDate) > new Date(originalDate)) alert(`Please Select Date before ${last}`);
-							else if (new Date(newDate) < new Date('2020-02-29'))
-								alert(`Please Select Date After 29/02/2020`);
+							if (
+								new Date(newDate) > new Date(originalDate) ||
+								new Date(newDate) < new Date('2020-02-29')
+							)
+								alert(`Please select a date between 29/02/2020 and ${last}`);
 							else onDateChange(newDate);
 						}}
 						style={{ marginRight: 3 }}
 					/>
 				</div>
+				<p>Last Updated On: {last}</p>
 			</div>
 			<div className="row">
 				<div className="col-md-4">

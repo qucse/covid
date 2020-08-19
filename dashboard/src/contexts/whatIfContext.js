@@ -1,5 +1,5 @@
 import createDataContext from './createDataContext';
-import { getPredictions } from '../API/whatIf';
+import whatIf from '../API/whatIf';
 
 const whatIfReducer = (state, action) => {
 	switch (action.type) {
@@ -47,7 +47,7 @@ const loading = (dispatch) => () => {
 };
 
 const getPrediction = (dispatch) => async (lockDowns) => {
-	let data = await getPredictions(lockDowns);
+	let data = await whatIf.getPredictions(lockDowns);
 	dispatch({ type: 'set_predictions', payload: data });
 };
 

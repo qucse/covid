@@ -4,13 +4,19 @@ import qatar from '../API/Qatar';
 const QatarReducer = (state, action) => {
 	switch (action.type) {
 		case 'load_qatar_data':
-			return { ...state, latestInformation: action.payload, originalDate: action.payload.lastUpdatedOn };
+			return {
+				...state,
+				latestInformation: action.payload,
+				originalDate: action.payload.lastUpdatedOn,
+				qatarChange: false,
+				toDate: action.payload.date
+			};
 		case 'load_qatar_daily':
-			return { ...state, dailyData: action.payload };
+			return { ...state, dailyData: action.payload[0], whatIfDaily: action.payload[1] };
 		case 'load_qatar_tests':
 			return { ...state, dailyTests: action.payload };
 		case 'change_date':
-			return { ...state, toDate: action.payload };
+			return { ...state, toDate: action.payload, qatarChange: true };
 		default:
 			return state;
 	}
@@ -21,13 +27,13 @@ const getLatestQatarData = (dispatch) => async (toDate) => {
 	dispatch({ type: 'load_qatar_data', payload: data });
 };
 
-const getQatarDailyData = (dispatch) => async () => {
-	let data = await qatar.getQatarDailyData();
+const getQatarDailyData = (dispatch) => async (toDate) => {
+	let data = await qatar.getQatarDailyData(toDate);
 	dispatch({ type: 'load_qatar_daily', payload: data });
 };
 
-const getQatarDailyTestsData = (dispatch) => async () => {
-	let data = await qatar.getQatarDailyTestsData();
+const getQatarDailyTestsData = (dispatch) => async (toDate) => {
+	let data = await qatar.getQatarDailyTestsData(toDate);
 	dispatch({ type: 'load_qatar_tests', payload: data });
 };
 
@@ -43,6 +49,8 @@ export const { Provider, Context } = createDataContext(
 		originalDate: null,
 		latestInformation: null,
 		dailyData: null,
-		dailyTests: null
+		dailyTests: null,
+		qatarChange: false,
+		whatIfDaily: null
 	}
 );

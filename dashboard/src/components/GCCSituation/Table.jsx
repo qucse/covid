@@ -43,7 +43,7 @@ export const Table = () => {
 										<span className="case">{element.deaths}</span>
 									</td>
 									<td>
-										{element.newActive > 0 ? (
+										{element.newActive >= 0 ? (
 											<span className="newPositiveCase ">
 												<FiTrendingUp /> {element.newActive}
 											</span>

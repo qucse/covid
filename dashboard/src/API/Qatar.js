@@ -17,7 +17,7 @@ class Qatar {
      * 
      * @author Abdelmonem Mohamed
      */
-	async getQatarDailyData() {
+	async getQatarDailyData(toDate) {
 		let response = await axios.get(
 			'https://www.data.gov.qa/api/records/1.0/analyze/?dataset=covid-19-cases-in-qatar&x=date.year&x=date.month&x=date.day&sort=x.date.year,x.date.month,x.date.day&maxpoints=&y.cases.expr=number_of_new_positive_cases_in_last_24_hrs&y.cases.func=SUM&y.cases.cumulative=false&y.recovery.expr=number_of_new_recovered_cases_in_last_24_hrs&y.recovery.func=SUM&y.recovery.cumulative=false&y.deaths.expr=number_of_new_deaths_in_last_24_hrs&y.deaths.func=SUM&y.deaths.cumulative=false&timezone=Asia%2FBaghdad&lang=en'
 		);
@@ -27,14 +27,27 @@ class Qatar {
 		let confirmed = [];
 		let deaths = [];
 		let recovered = [];
+		let whatIfDaily = [];
+		let whatIfDates = [];
+		let whatIfConfirmed = [];
+		let whatIfDeaths = [];
+		let whatIfRecovered = [];
 		data.forEach((element) => {
+			if (toDate && new Date(toDate) < new Date(`${element.x.year}/${element.x.month}/${element.x.day}`)) return;
 			dates.push(`${element.x.day}/${element.x.month}/${element.x.year}`);
 			confirmed.push(element.cases);
 			deaths.push(element.deaths);
 			recovered.push(element.recovery);
 		});
+		data.forEach((element) => {
+			whatIfDates.push(`${element.x.day}/${element.x.month}/${element.x.year}`);
+			whatIfConfirmed.push(element.cases);
+			whatIfDeaths.push(element.deaths);
+			whatIfRecovered.push(element.recovery);
+		});
 		qatarDailyData.push(dates, confirmed, deaths, recovered);
-		return qatarDailyData;
+		whatIfDaily.push(whatIfDates, whatIfConfirmed, whatIfDeaths, whatIfRecovered);
+		return [ qatarDailyData, whatIfDaily ];
 	}
 
 	/**
@@ -45,7 +58,7 @@ class Qatar {
      * 
      * @author Abdelmonem Mohamed
      */
-	async getQatarDailyTestsData() {
+	async getQatarDailyTestsData(toDate) {
 		let response = await axios.get(
 			'https://www.data.gov.qa/api/records/1.0/analyze/?dataset=covid-19-cases-in-qatar&x=date.year&x=date.month&x=date.day&y.test.expr=total_number_of_tests_to_date&y.test.func=SUM&y.test.cumulative=false'
 		);
@@ -54,6 +67,7 @@ class Qatar {
 		let dates = [];
 		let tests = [];
 		data.forEach((element, index) => {
+			if (toDate && new Date(toDate) < new Date(`${element.x.year}/${element.x.month}/${element.x.day}`)) return;
 			dates.push(`${element.x.day}/${element.x.month}/${element.x.year}`);
 			if (index === 0) {
 				tests.push(0);
@@ -80,7 +94,6 @@ class Qatar {
 					'https://www.data.gov.qa/api/records/1.0/search/?sort=date&rows=1&dataset=covid-19-cases-in-qatar&timezone=Asia%2FBaghdad&lang=en#');
 		let response = await axios.get(url);
 		let data = response.data.records[0].fields;
-		let str = response.data.records[0].record_timestamp;
 		return {
 			date: data.date,
 			newConfirmed: data.number_of_new_positive_cases_in_last_24_hrs,
@@ -99,7 +112,7 @@ class Qatar {
 			totalActiveCases: data.total_number_of_active_cases_undergoing_treatment_to_date,
 			newTests: data.number_of_new_tests_in_last_24_hrs,
 			totalTests: data.total_number_of_tests_to_date,
-			lastUpdatedOn: str.substring(0, str.indexOf('T'))
+			lastUpdatedOn: response.data.records[0].record_timestamp
 		};
 	}
 }

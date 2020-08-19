@@ -11,9 +11,8 @@ export const MapAndBubble = () => {
 	return (
 		<div className="">
 			<div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 5 }}>
-				<p>Last Updated On: {`${last}`}</p>
 				<div style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 10 }}>Get Data Until:</p>
+					<p style={{ marginRight: 10 }}>Situation On:</p>
 					<DatePicker
 						disableToolbar
 						allowKeyboardControl
@@ -26,15 +25,17 @@ export const MapAndBubble = () => {
 							let ndate = date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
 							let year = date.getUTCFullYear();
 							let newDate = `${year}-${month}-${ndate}`;
-							if (new Date(newDate) > new Date(state.originalDate))
-								alert(`Please Select Date before ${last}`);
-							else if (new Date(newDate) < new Date('2020-01-04'))
-								alert(`Please Select Date After 04/01/2020`);
+							if (
+								new Date(newDate) > new Date(state.originalDate) ||
+								new Date(newDate) < new Date('2020-01-04')
+							)
+								alert(`Please select a date between 04/01/2020 and ${last}`);
 							else changeTo(newDate);
 						}}
 						style={{ marginRight: 3 }}
 					/>
 				</div>
+				<p>Last Updated On: {`${last}`}</p>
 			</div>
 			<div className="row">
 				<div className="col-md-6">

@@ -5,7 +5,7 @@ import { Context as whatIfContext } from '../../contexts/whatIfContext';
 import moment from 'moment';
 
 export const Graph = () => {
-	const { state: { dailyData } } = useContext(QatarContext);
+	const { state: { whatIfDaily } } = useContext(QatarContext);
 	const { state: { predictions } } = useContext(whatIfContext);
 	let dates = [];
 	let currDate = moment.utc(new Date('5/1/2020')).startOf('day');
@@ -20,7 +20,7 @@ export const Graph = () => {
 	dates.push(currDate.clone().toDate());
 
 	const info = {
-		labels: dates.slice(0, dailyData[1].slice(dailyData[0].indexOf('1/5/2020')).length - 1 + 45),
+		labels: dates.slice(0, whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45),
 		datasets: [
 			{
 				label: 'Actual',
@@ -41,7 +41,7 @@ export const Graph = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: dailyData[1].slice(dailyData[0].indexOf('1/5/2020'))
+				data: whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020'))
 			},
 			{
 				label: 'Predicted',
@@ -62,7 +62,7 @@ export const Graph = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: predictions.data.slice(0, dailyData[1].slice(dailyData[0].indexOf('1/5/2020')).length - 1 + 45)
+				data: predictions.data.slice(0, whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45)
 			}
 		]
 	};
