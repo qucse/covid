@@ -19,7 +19,6 @@
 		"chart.js": "^2.9.3",
 		"date-fns": "^2.15.0",
 		"font-awesome": "^4.7.0",
-		"http-proxy-middleware": "^1.0.5",
 		"moment": "^2.27.0",
 		"react": "^16.13.1",
 		"react-animated-css": "^1.2.1",
@@ -30,8 +29,7 @@
 		"react-loading-overlay": "^1.0.1",
 		"react-loading-screen": "0.0.17",
 		"react-router-dom": "^5.2.0",
-		"react-scripts": "3.4.1",
-		"react-spinners": "^0.9.0"
+		"react-scripts": "3.4.1"
 	},
 	"scripts": {
 		"start": "react-scripts start",

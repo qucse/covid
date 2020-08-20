@@ -2,15 +2,13 @@ import React, { useContext } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Context } from '../../contexts/GCCContext';
-import { DatePicker } from '@material-ui/pickers';
 
 export const GCCDailyDataForm = () => {
 	const {
-		state: { country, scaleType, from, to },
+		state: { country, scaleType },
 		changeCountry,
 		changeScaleType,
-		changeFrom,
-		changeTo
+
 	} = useContext(Context);
 	const countries = [
 		{
