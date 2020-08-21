@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ParametersForm } from '../components/WhatIf/ParametersForm';
 import { CountryAndGraph } from '../components/WhatIf/CountryAndGraph';
 import { Graph } from '../components/WhatIf/Graph';
@@ -16,7 +16,9 @@ export const WhatIf = () => {
 		getPrediction,
 		loading
 	} = useContext(Context);
-	
+	useEffect(() => {
+		document.title = 'What If Analysis';
+	}, []);
 	return (
 		<div className="container-fluid">
 			<div className="row">

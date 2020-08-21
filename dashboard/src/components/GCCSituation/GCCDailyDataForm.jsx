@@ -12,28 +12,28 @@ export const GCCDailyDataForm = () => {
 	} = useContext(Context);
 	const countries = [
 		{
-			value: 'qatar',
+			value: 'Qatar',
 			key: 'Qatar'
 		},
 		{
-			value: 'saudi-arabia',
+			value: 'Saudi Arabia',
 			key: 'Saudi Arabia'
 		},
 
 		{
-			value: 'united-arab-emirates',
+			value: 'United Arab Emirates',
 			key: 'United Arab Emirates'
 		},
 		{
-			value: 'kuwait',
+			value: 'Kuwait',
 			key: 'Kuwait'
 		},
 		{
-			value: 'oman',
+			value: 'Oman',
 			key: 'Oman'
 		},
 		{
-			value: 'bahrain',
+			value: 'Bahrain',
 			key: 'Bahrain'
 		}
 	];
@@ -87,50 +87,6 @@ export const GCCDailyDataForm = () => {
 					</Select>
 				</div>
 			</div>
-			{/* <div className="row mt-3 mb-3" style={{ width: '100%' }}>
-				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 20 }}>From:</p>
-					<DatePicker
-						disableToolbar
-						allowKeyboardControl
-						variant="inline"
-						format="dd/MM/yyyy"
-						style={{ width: '100%' }}
-						value={from}
-						onChange={(date) => {
-							let month =
-								date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
-							let ndate =
-								date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate() + 1}` : date.getUTCDate() + 1;
-							let year = date.getUTCFullYear();
-							let newDate = `${year}-${month}-${ndate}`;
-							console.log(newDate);
-							changeFrom(newDate);
-						}}
-					/>
-				</div>
-				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 20 }}>To:</p>
-					<DatePicker
-						disableToolbar
-						allowKeyboardControl
-						variant="inline"
-						format="dd/MM/yyyy"
-						style={{ width: '100%' }}
-						value={to}
-						onChange={(date) => {
-							let month =
-								date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
-							let ndate =
-								date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate() + 1}` : date.getUTCDate() + 1;
-							let year = date.getUTCFullYear();
-							let newDate = `${year}-${month}-${ndate}`;
-							console.log(newDate);
-							changeTo(newDate);
-						}}
-					/>
-				</div> 
-			</div>*/}
 		</React.Fragment>
 	);
 };

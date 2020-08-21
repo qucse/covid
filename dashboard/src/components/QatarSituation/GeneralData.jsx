@@ -25,10 +25,8 @@ export const GeneralData = () => {
 				}}
 			>
 				<div style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 10 }}>Situation On:</p>
+					<p style={{ marginRight: 10 }}>Set Situation On:</p>
 					<DatePicker
-						disableToolbar
-						allowKeyboardControl
 						defaultValue={last}
 						format="dd/MM/yyyy"
 						value={toDate}

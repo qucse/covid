@@ -295,8 +295,8 @@ export const Map = ({ data, choice }) => {
       unknownColor="#666666"
       label="properties.name"
       valueFormat=".2s"
-      projectionScale={1500}
-      projectionTranslation={[-0.5, 2.0]}
+      projectionScale={1400}
+      projectionTranslation={[-1.1, 1.92]}
       projectionRotation={[0, 0, 0]}
       enableGraticule={true}
       graticuleLineWidth={0}

@@ -9,7 +9,7 @@ export const NavBar = () => {
 		<Navbar bg="light" expand="lg" className="p-0">
 			<div className="container align-items-baseline">
 				<Navbar.Brand>
-					<Link to="/" className="nav-text">
+					<Link to="/" className="nav-text" style={{ fontWeight: 'bold' }}>
 						QU COVID-19 Dashboard
 					</Link>
 				</Navbar.Brand>
