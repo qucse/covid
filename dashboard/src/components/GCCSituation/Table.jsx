@@ -7,7 +7,7 @@ export const Table = () => {
     state: { GCCData },
   } = useContext(Context);
   return (
-    <div className="row mt-4 mb-4">
+    <div className="row mt-5 mb-4">
       <div className="col-md-12">
         <div className="card p-4">
           <table className="table table-striped table-hover table-responsive-md">

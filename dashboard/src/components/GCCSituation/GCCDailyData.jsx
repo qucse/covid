@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import { GCCDailyDataForm } from './GCCDailyDataForm';
+import { Bar } from 'react-chartjs-2';
 
 export const GCCDailyData = ({ data, scaleType }) => {
 	const chartInfo = {
@@ -71,24 +72,71 @@ export const GCCDailyData = ({ data, scaleType }) => {
 			}
 		]
 	};
-
+	const info = {
+		labels: data[0],
+		datasets: [
+			{
+				label: 'Recovered',
+				backgroundColor: 'rgba(64, 168, 50)',
+				borderColor: 'rgba(64, 168, 50,1)',
+				borderWidth: 1,
+				hoverBackgroundColor: 'rgba(64, 168, 50,0.4)',
+				hoverBorderColor: 'rgba(64, 168, 50,1)',
+				data: data[3]
+			},
+			{
+				label: 'Confirmed',
+				backgroundColor: 'rgba(40, 158, 209)',
+				borderColor: 'rgba(40, 158, 209,1)',
+				borderWidth: 1,
+				hoverBackgroundColor: 'rgba(40, 158, 209,0.4)',
+				hoverBorderColor: 'rgba(40, 158, 209,1)',
+				data: data[1]
+			},
+			{
+				label: 'Deaths',
+				backgroundColor: 'rgba(235, 5, 5)',
+				borderColor: 'rgba(235, 5, 5,1)',
+				borderWidth: 1,
+				hoverBackgroundColor: 'rgba(235, 5, 5,0.4)',
+				hoverBorderColor: 'rgba(235, 5, 5,1)',
+				data: data[2]
+			}
+		]
+	};
 	return (
-		<div className="card mt-5">
-			<div className="card-container">
-				<GCCDailyDataForm />
-				<Line
-					data={chartInfo}
-					options={{
-						scales: {
-							yAxes: [
-								{
-									type: scaleType === 'logarithmic' ? 'logarithmic' : 'linear'
-								}
-							]
-						}
-					}}
-				/>
-			</div>
-		</div>
+		<React.Fragment>
+			<GCCDailyDataForm />
+			{/* <Line
+				data={chartInfo}
+				options={{
+					scales: {
+						yAxes: [
+							{
+								type: scaleType === 'logarithmic' ? 'logarithmic' : 'linear'
+							}
+						]
+					},
+				}}
+			/> */}
+			<Bar
+				data={info}
+				options={{
+					scales: {
+						xAxes: [
+							{
+								stacked: true
+							}
+						],
+						yAxes: [
+							{
+								stacked: true,
+								type: scaleType === 'logarithmic' ? 'logarithmic' : 'linear'
+							}
+						]
+					}
+				}}
+			/>
+		</React.Fragment>
 	);
 };

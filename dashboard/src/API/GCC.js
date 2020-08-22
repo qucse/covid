@@ -1,5 +1,6 @@
 const axios = require('axios').default;
 const countries = [ 'Saudi Arabia', 'Qatar', 'United Arab Emirates', 'Kuwait', 'Oman', 'Bahrain' ];
+const _ = require('lodash');
 class GCC {
 	async getDataForCountry(country, toDate) {
 		try {
@@ -52,10 +53,18 @@ class GCC {
 			confirmed = [],
 			deaths = [],
 			recovered = [];
+		data.sort(function(a, b) {
+			var dateA = new Date(a.date),
+				dateB = new Date(b.date);
+			return dateA - dateB;
+		});
+		data = _.uniqBy(data, function(e) {
+			return e.date;
+		});
 		if (to) data = data.slice(0, data.indexOf(data.find((element) => element.date === to)) + 1);
 		if (cartesian === 'daily') {
 			data.forEach((element, index) => {
-				if (element.confirmed === 0 && element.recovered === 0 && element.Deaths === 0) return;
+				if (element.confirmed === 0 && element.recovered === 0 && element.deaths === 0) return;
 				let date = new Date(element.date);
 				dates.push(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
 				if (index === 0) {
@@ -80,7 +89,6 @@ class GCC {
 			});
 			countryDailyData.push(dates, confirmed, deaths, recovered);
 		}
-
 		return countryDailyData;
 	}
 	async getDataForAllGCC(toDate) {

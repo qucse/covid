@@ -78,6 +78,8 @@ export const { Provider, Context } = createDataContext(
 		to: null,
 		gccChange: false,
 		mapChoice: 'confirmed',
-		bubbleChoice: 'confirmed'
+		bubbleChoice: 'confirmed',
+		mapName: 'map',
+		bubbleName: 'bubble'
 	}
 );

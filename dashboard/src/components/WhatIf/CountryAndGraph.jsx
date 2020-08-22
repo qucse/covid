@@ -4,9 +4,9 @@ import Select from '@material-ui/core/Select';
 
 export const CountryAndGraph = () => {
 	return (
-		<div className="mt-3">
+		<div className="mt-sm-4">
 			<div className="row">
-				<div className=" col-md-6">
+				<div className=" col-md-6 mb-sm-4">
 					<div className="card p-3" style={{ height: 118 }}>
 						<p style={{ fontSize: 20 }}>Country</p>
 						<Select
@@ -24,7 +24,7 @@ export const CountryAndGraph = () => {
 						</Select>
 					</div>
 				</div>
-				<div className=" col-md-6">
+				<div className=" col-md-6 mb-sm-4">
 					<div className="card p-3" style={{ height: 118 }}>
 						<p style={{ fontSize: 20 }}>Metric</p>
 						<Select

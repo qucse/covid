@@ -8,7 +8,7 @@ export const ActiveAndTests = () => {
 	const { state: { latestInformation, dailyTests } } = useContext(Context);
 
 	return (
-			<div className="row mt-5 mb-5">
+			<div className="row mt-5 mb-2">
 				<ActiveCases
 					active={latestInformation.totalActiveCases}
 					deaths={latestInformation.deaths}

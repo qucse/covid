@@ -71,7 +71,7 @@ export const GCCDailyDataForm = () => {
 					</Select>
 				</div>
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
-					<p style={{ marginRight: 20 }}>Graph:</p>
+					<p style={{ marginRight: 20 }}>Axis:</p>
 					<Select
 						value={scaleType}
 						onChange={(event) => {

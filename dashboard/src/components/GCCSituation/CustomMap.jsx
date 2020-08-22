@@ -7,7 +7,7 @@ export const CustomMap = ({ data, choice }) => {
 	return (
 		<div style={{ height: '100%', width: '100%' }}>
 			<MapChart setTooltipContent={setContent} data={data} choice={choice} />
-			<ReactTooltip>{content}</ReactTooltip>
+			<ReactTooltip type="light">{content}</ReactTooltip>
 		</div>
 	);
 };

@@ -76,7 +76,7 @@ export const DailyData = () => {
 	};
 
 	return (
-		<div className="card mt-5  pl-3 pr-3 pb-3">
+		<div className="card mt-sm-4 pl-3 pr-3 pb-3">
 			<div className="card-container">
 				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
 					Daily Data

@@ -13,15 +13,15 @@ import LoadingOverlay from 'react-loading-overlay';
 function App() {
 	const {
 		state: {
-			whatIfChange
-			// predictions,
-			// schoolClosing,
-			// workspaceClosing,
-			// restrictionsOnGatherings,
-			// closePublicTransport,
-			// internationalTravelControls
-		}
-		// getPrediction
+			whatIfChange,
+			predictions,
+			schoolClosing,
+			workspaceClosing,
+			restrictionsOnGatherings,
+			closePublicTransport,
+			internationalTravelControls
+		},
+		getPrediction
 	} = useContext(whatIfContext);
 
 	const {
@@ -42,12 +42,11 @@ function App() {
 			getCountryDailyData(country, scaleType, to);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ country, scaleType ]
+		[ country, scaleType, to ]
 	);
 
 	useEffect(
 		() => {
-			getCountryDailyData(country, scaleType, to);
 			getGCCData(to);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,24 +62,23 @@ function App() {
 		[ toDate ]
 	);
 
-	// useEffect(
-	//   () => {
-	//     getPrediction({
-	//       schoolClosing,
-	//       workspaceClosing,
-	//       restrictionsOnGatherings,
-	//       closePublicTransport,
-	//       internationalTravelControls,
-	//     });
-	//   },
-	//   // eslint-disable-next-line react-hooks/exhaustive-deps
-	//   [
-	//     /*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
-	//   ]
-	// );
+	useEffect(
+		() => {
+			getPrediction({
+				schoolClosing,
+				workspaceClosing,
+				restrictionsOnGatherings,
+				closePublicTransport,
+				internationalTravelControls
+			});
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[
+			/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
+		]
+	);
 
-	return GCCData && countryData && latestInformation && dailyData && dailyTests /*&&
-    predictions*/ ? (
+	return GCCData && countryData && latestInformation && dailyData && dailyTests && predictions ? (
 		<LoadingOverlay
 			active={whatIfChange || gccChange || qatarChange}
 			spinner

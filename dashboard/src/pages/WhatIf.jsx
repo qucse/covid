@@ -21,16 +21,21 @@ export const WhatIf = () => {
 	}, []);
 	return (
 		<div className="container-fluid">
-			<div className="row">
-				<div className="col-md-5 pr-0">
+			<div className="row" style={{ display: 'flex', marginBottom: 3 }}>
+				<div
+					className="col-md-5 pr-0"
+					style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+				>
 					<ParametersForm />
 				</div>
-				<div className="col-md-7">
+				<div
+					className="col-md-7"
+					style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}
+				>
 					<CountryAndGraph />
 					<Graph />
 					<Button
 						variant="contained"
-						className="mt-3"
 						color="primary"
 						fullWidth={true}
 						onClick={() => {

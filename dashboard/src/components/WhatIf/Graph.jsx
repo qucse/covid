@@ -11,16 +11,14 @@ export const Graph = () => {
 	let currDate = moment.utc(new Date('5/1/2020')).startOf('day');
 	let lastDate = moment.utc(new Date('1/2/2021')).startOf('day');
 
-	while (currDate.add(1, 'days').diff(lastDate) < 0) {
+	while (currDate.add(1, 'days').diff(lastDate) <= 0) {
 		let date = currDate.clone().toDate().toISOString();
 		date = date.substring(0, date.indexOf('T'));
 		date = date.split('-');
 		dates.push(`${date[2]}/${date[1]}/${date[0]}`);
 	}
-	dates.push(currDate.clone().toDate());
-
 	const info = {
-		labels: dates.slice(0, whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45),
+		labels: dates,
 		datasets: [
 			{
 				label: 'Actual',
@@ -62,13 +60,13 @@ export const Graph = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: predictions.data.slice(0, whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45)
+				data: predictions.data
 			}
 		]
 	};
 
 	return (
-		<div className="card mt-3 pl-3 pr-3">
+		<div className="card mb-sm-4 pl-3 pr-3">
 			<div className="card-container">
 				<p className="title" style={{ fontSize: 30 }}>
 					Actual Vs. Predicted

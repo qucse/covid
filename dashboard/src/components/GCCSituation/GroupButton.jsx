@@ -1,12 +1,12 @@
 import React from 'react';
 
-export const GroupButton = ({ onChange, choice }) => {
+export const GroupButton = ({ onChange, choice, name }) => {
 	return (
 		<div className="btn-group btn-group-sm mb-1 mt-1" role="group" style={{ width: '100%' }}>
 			<label className="btn btn-info">
 				<input
 					type="radio"
-					name={'mapChoice'}
+					name={name}
 					defaultChecked={choice === 'confirmed' ? true : false}
 					value={'confirmed'}
 					onClick={(event) => {
@@ -18,7 +18,7 @@ export const GroupButton = ({ onChange, choice }) => {
 			<label className="btn btn-info">
 				<input
 					type="radio"
-					name={'mapChoice'}
+					name={name}
 					defaultChecked={choice === 'recovered' ? true : false}
 					value={'recovered'}
 					onClick={(event) => {
@@ -30,7 +30,7 @@ export const GroupButton = ({ onChange, choice }) => {
 			<label className="btn btn-info">
 				<input
 					type="radio"
-					name={'mapChoice'}
+					name={name}
 					defaultChecked={choice === 'deaths' ? true : false}
 					value={'deaths'}
 					onClick={(event) => {
