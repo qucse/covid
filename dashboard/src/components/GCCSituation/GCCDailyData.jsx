@@ -107,7 +107,7 @@ export const GCCDailyData = ({ data, scaleType }) => {
 	return (
 		<React.Fragment>
 			<GCCDailyDataForm />
-			{/* <Line
+			<Line
 				data={chartInfo}
 				options={{
 					scales: {
@@ -118,8 +118,8 @@ export const GCCDailyData = ({ data, scaleType }) => {
 						]
 					},
 				}}
-			/> */}
-			<Bar
+			/>
+			{/* <Bar
 				data={info}
 				options={{
 					scales: {
@@ -136,7 +136,7 @@ export const GCCDailyData = ({ data, scaleType }) => {
 						]
 					}
 				}}
-			/>
+			/> */}
 		</React.Fragment>
 	);
 };

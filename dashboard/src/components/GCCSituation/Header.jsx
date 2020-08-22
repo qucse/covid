@@ -12,6 +12,7 @@ export const Header = (params) => {
 				display: 'flex',
 				alignItems: 'baseline',
 				justifyContent: 'space-between',
+				flexWrap: 'wrap',
 				marginBottom: 5
 			}}
 		>

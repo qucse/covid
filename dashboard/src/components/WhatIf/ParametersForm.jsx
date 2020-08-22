@@ -137,7 +137,7 @@ export const ParametersForm = () => {
 
 	return (
 		<React.Fragment>
-			<div className="row mt-3 mt-sm-4">
+			<div className="row mt-3 mt-4">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
@@ -149,7 +149,7 @@ export const ParametersForm = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-3 row mt-sm-4">
+			<div className="mt-3 row mt-4">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
@@ -161,7 +161,7 @@ export const ParametersForm = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-3 row mt-sm-4">
+			<div className="mt-3 row mt-4">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
@@ -174,7 +174,7 @@ export const ParametersForm = () => {
 				</div>
 			</div>
 
-			<div className="mt-3 row mt-sm-4">
+			<div className="mt-3 row mt-4">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider
@@ -186,7 +186,7 @@ export const ParametersForm = () => {
 					</div>
 				</div>
 			</div>
-			<div className="mt-3 row mt-sm-4">
+			<div className="mt-3 row mt-4">
 				<div className="col-md-12">
 					<div className=" card pr-3 pl-3 ">
 						<ParameterSlider

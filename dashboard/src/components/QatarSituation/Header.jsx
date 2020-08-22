@@ -13,7 +13,8 @@ export const Header = () => {
 				display: 'flex',
 				alignItems: 'baseline',
 				justifyContent: 'space-between',
-				marginBottom: 5
+				marginBottom: 5,
+				flexWrap: 'wrap'
 			}}
 		>
 			<div style={{ display: 'flex', alignItems: 'baseline' }}>

@@ -18,7 +18,7 @@ export const Graph = () => {
 		dates.push(`${date[2]}/${date[1]}/${date[0]}`);
 	}
 	const info = {
-		labels: dates,
+		labels: dates.slice(0, whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45),
 		datasets: [
 			{
 				label: 'Actual',
@@ -60,13 +60,16 @@ export const Graph = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: predictions.data
+				data: predictions.data.slice(
+					0,
+					whatIfDaily[1].slice(whatIfDaily[0].indexOf('1/5/2020')).length - 1 + 45
+				)
 			}
 		]
 	};
 
 	return (
-		<div className="card mb-sm-4 pl-3 pr-3">
+		<div className="card mb-4 pl-3 pr-3">
 			<div className="card-container">
 				<p className="title" style={{ fontSize: 30 }}>
 					Actual Vs. Predicted

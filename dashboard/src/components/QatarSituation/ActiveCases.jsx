@@ -14,7 +14,7 @@ export const ActiveCases = ({ active, deaths, recovered }) => {
 	};
 
 	return (
-		<div className="col-md-6 mb-sm-4">
+		<div className="col-md-6 mb-4">
 			<div className="card pb-3">
 				<div className="card-container">
 					<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>

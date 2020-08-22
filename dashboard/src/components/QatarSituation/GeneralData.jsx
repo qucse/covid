@@ -13,10 +13,10 @@ export const GeneralData = () => {
 	const { state: { latestInformation } } = useContext(Context);
 
 	return (
-		<div className="mt-sm-3">
+		<div className="mt-3">
 			<Header />
 			<div className="row">
-				<div className="col-md-4 mb-sm-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.confirmed}
 						newData={latestInformation.newConfirmed}
@@ -27,7 +27,7 @@ export const GeneralData = () => {
 						subtitle={'New Confirmed Cases'}
 					/>
 				</div>
-				<div className="col-md-4 mb-sm-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.recovered}
 						newData={latestInformation.newRecovered}
@@ -38,7 +38,7 @@ export const GeneralData = () => {
 						subtitle={'New Recovered Cases'}
 					/>
 				</div>
-				<div className="col-md-4 mb-sm-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.deaths}
 						newData={latestInformation.newDeathCases}
@@ -50,8 +50,8 @@ export const GeneralData = () => {
 					/>
 				</div>
 			</div>
-			<div className="row">
-				<div className="col-md-4 mb-sm-4">
+			<div className="row mb-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.totalICUCases}
 						newData={latestInformation.newICUCases}
@@ -62,7 +62,7 @@ export const GeneralData = () => {
 						subtitle={'New ICU Cases'}
 					/>
 				</div>
-				<div className="col-md-4 mb-sm-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.totalHospitalCases}
 						newData={latestInformation.newHospitalCases}
@@ -73,7 +73,7 @@ export const GeneralData = () => {
 						subtitle={'New Hospital Cases'}
 					/>
 				</div>
-				<div className="col-md-4 mb-sm-4">
+				<div className="col-md-4 mb-4">
 					<InformationCard
 						data={latestInformation.totalTests}
 						subcolor={'rgba(255,168,0,.4)'}
