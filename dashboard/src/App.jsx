@@ -72,11 +72,7 @@ function App() {
 		]
 	);
 	return GCCData && countryData && predictions ? (
-		<LoadingOverlay
-			active={whatIfChange || gccChange}
-			spinner
-			text="Applying Your Customized Data..."
-		>
+		<LoadingOverlay active={whatIfChange || gccChange} spinner text="Applying Your Customized Data...">
 			<Router>
 				<NavBar />
 				<Switch>

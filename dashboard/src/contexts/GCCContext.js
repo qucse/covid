@@ -8,6 +8,7 @@ const GCCReducer = (state, action) => {
 				...state,
 				GCCData: action.payload,
 				gccChange: false,
+				to: action.payload[0].date,
 				originalDate: action.payload[0].lastUpdated,
 			};
 		case 'load_country_data':

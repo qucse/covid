@@ -4,6 +4,7 @@ import { CountryAndGraph } from '../components/WhatIf/CountryAndGraph';
 import { Graph } from '../components/WhatIf/Graph';
 import Button from '@material-ui/core/Button';
 import { Context } from '../contexts/whatIfContext';
+
 export const WhatIf = () => {
 	const {
 		state: {

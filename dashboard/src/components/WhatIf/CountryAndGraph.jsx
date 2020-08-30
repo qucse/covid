@@ -67,7 +67,7 @@ export const CountryAndGraph = () => {
 					<div className="card p-3" style={{ height: 118 }}>
 						<p style={{ fontSize: 20 }}>Predefined Policies</p>
 						<Select
-							defaultValue={null}
+							defaultValue={' '}
 							value={policy}
 							onChange={(event) => {
 								changePolicy(event.target.value);

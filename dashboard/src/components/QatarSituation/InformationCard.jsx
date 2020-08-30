@@ -1,6 +1,6 @@
 import React from 'react';
 import './InformationCard.css';
-import { FiTrendingUp } from 'react-icons/fi';
+import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
 
 export const InformationCard = ({ data, newData, title, subtitle, color, subcolor, image, percent }) => {
 	return (
@@ -12,8 +12,8 @@ export const InformationCard = ({ data, newData, title, subtitle, color, subcolo
 				</p>
 				<p className="data">{data ? percent ? `${data}%` : data.toLocaleString('en') : 0}</p>
 				<p className="subData align-items-baseline" style={{ backgroundColor: subcolor }}>
-					{newData > 0 ? <FiTrendingUp /> : null}{' '}
-					{newData ? percent ? `${newData}%` : newData.toLocaleString('en') : 0} {subtitle}
+					{newData > 0 ? <FiTrendingUp /> : newData < 0 ? <FiTrendingDown /> : null}{' '}
+					{newData ? percent ? `${Math.abs(newData)}%` : newData.toLocaleString('en') : 0} {subtitle}
 				</p>
 			</div>
 		</div>

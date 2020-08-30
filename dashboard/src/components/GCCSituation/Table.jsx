@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { FiTrendingDown, FiTrendingUp } from 'react-icons/fi';
+import { MdTrendingFlat } from 'react-icons/md';
 import { Context } from '../../contexts/GCCContext';
 
 export const Table = () => {
@@ -43,31 +44,65 @@ export const Table = () => {
 									</th>
 									<td className="case">{element.country}</td>
 									<td style={{ textAlign: 'center' }}>
-										<span className="newPositiveCase">
-											<FiTrendingUp /> {element.newConfirmed}
-										</span>
+										{element.newConfirmed > 0 ? (
+											<span className="newPositiveCase ">
+												<FiTrendingUp /> {element.newConfirmed}
+											</span>
+										) : element.newActive < 0 ? (
+											<span className="newNegativeCase ">
+												<FiTrendingDown /> {Math.abs(element.newConfirmed)}
+											</span>
+										) : (
+											<span className="newZeroCase">
+												<MdTrendingFlat /> {Math.abs(element.newConfirmed)}
+											</span>
+										)}
 										<span className="case">{element.confirmed.toLocaleString('en')}</span>
 									</td>
 									<td style={{ textAlign: 'center' }}>
-										<span className="newPositiveCase">
-											<FiTrendingUp /> {element.newRecovered}
-										</span>
+										{element.newRecovered > 0 ? (
+											<span className="newPositiveCase ">
+												<FiTrendingUp /> {element.newRecovered}
+											</span>
+										) : element.newActive < 0 ? (
+											<span className="newNegativeCase ">
+												<FiTrendingDown /> {Math.abs(element.newRecovered)}
+											</span>
+										) : (
+											<span className="newZeroCase">
+												<MdTrendingFlat /> {Math.abs(element.newRecovered)}
+											</span>
+										)}
 										<span className="case">{element.recovered.toLocaleString('en')}</span>
 									</td>
 									<td style={{ textAlign: 'center' }}>
-										<span className="newPositiveCase ">
-											<FiTrendingUp /> {element.newDeaths}
-										</span>
+										{element.newDeaths > 0 ? (
+											<span className="newPositiveCase ">
+												<FiTrendingUp /> {element.newDeaths}
+											</span>
+										) : element.newActive < 0 ? (
+											<span className="newNegativeCase ">
+												<FiTrendingDown /> {Math.abs(element.newDeaths)}
+											</span>
+										) : (
+											<span className="newZeroCase">
+												<MdTrendingFlat /> {Math.abs(element.newDeaths)}
+											</span>
+										)}
 										<span className="case">{element.deaths.toLocaleString('en')}</span>
 									</td>
 									<td style={{ textAlign: 'center' }}>
-										{element.newActive >= 0 ? (
+										{element.newActive > 0 ? (
 											<span className="newPositiveCase ">
 												<FiTrendingUp /> {element.newActive}
 											</span>
-										) : (
+										) : element.newActive < 0 ? (
 											<span className="newNegativeCase ">
 												<FiTrendingDown /> {Math.abs(element.newActive)}
+											</span>
+										) : (
+											<span className="newZeroCase">
+												<MdTrendingFlat /> {Math.abs(element.newActive)}
 											</span>
 										)}
 										<span className="case">{element.active.toLocaleString('en')}</span>

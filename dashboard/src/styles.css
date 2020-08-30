@@ -36,6 +36,13 @@ body {
 	margin-right: 5px;
 }
 
+.newZeroCase {
+	font-size: 14px;
+	color: orange;
+	font-weight: bold;
+	margin-right: 5px;
+}
+
 .page {
 	position: fixed;
 	padding: 0;
