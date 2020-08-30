@@ -30,6 +30,9 @@ export const Table = () => {
 								<th scope="col" style={{ textAlign: 'center' }}>
 									Population
 								</th>
+								<th scope="col" style={{ textAlign: 'center' }}>
+									Mortality Rate
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -71,6 +74,9 @@ export const Table = () => {
 									</td>
 									<td style={{ textAlign: 'center' }}>
 										<span className="case">{element.population.toLocaleString('en')}</span>
+									</td>
+									<td style={{ textAlign: 'center' }}>
+										<span className="case">{element.mortality}%</span>
 									</td>
 								</tr>
 							))}

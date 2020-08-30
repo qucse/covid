@@ -17,10 +17,43 @@ const whatIfReducer = (state, action) => {
 			return { ...state, predictions: action.payload, whatIfChange: false };
 		case 'change':
 			return { ...state, whatIfChange: true };
+		case 'change_policy':
+			return {
+				...state,
+				policy: action.policy,
+				schoolClosing: { ...state.schoolClosing, level: action.payload[0] },
+				workspaceClosing: { ...state.workspaceClosing, level: action.payload[1] },
+				restrictionsOnGatherings: { ...state.restrictionsOnGatherings, level: action.payload[2] },
+				closePublicTransport: { ...state.closePublicTransport, level: action.payload[3] },
+				internationalTravelControls: { ...state.internationalTravelControls, level: action.payload[4] }
+			};
 		default:
 			break;
 	}
 };
+
+const policies = [
+	{
+		key: 1,
+		value: [ 1, 1, 3, 1, 1 ]
+	},
+	{
+		key: 2,
+		value: [ 2, 2, 2, 1, 1 ]
+	},
+	{
+		key: 3,
+		value: [ 3, 1, 4, 2, 2 ]
+	},
+	{
+		key: 4,
+		value: [ 3, 2, 4, 2, 2 ]
+	},
+	{
+		key: 5,
+		value: [ 3, 3, 4, 2, 2 ]
+	}
+];
 
 const changeSchoolClosing = (dispatch) => async (object) => {
 	dispatch({ type: 'change_school', payload: object });
@@ -51,6 +84,14 @@ const getPrediction = (dispatch) => async (lockDowns) => {
 	dispatch({ type: 'set_predictions', payload: data });
 };
 
+const changePolicy = (dispatch) => async (change) => {
+	dispatch({
+		type: 'change_policy',
+		payload: policies.find((element) => element.key === change)['value'],
+		policy: policies.find((element) => element.key === change)['key']
+	});
+};
+
 export const { Provider, Context } = createDataContext(
 	whatIfReducer,
 	{
@@ -58,6 +99,7 @@ export const { Provider, Context } = createDataContext(
 		changeSchoolClosing,
 		changeWorkspaceClosing,
 		changeClosePublicTransport,
+		changePolicy,
 		changeInternationalTravelControls,
 		changeRestrictionsOnGatherings,
 		loading
@@ -94,6 +136,7 @@ export const { Provider, Context } = createDataContext(
 			toDate: '2020-12-31'
 		},
 		predictions: null,
-		whatIfChange: false
+		whatIfChange: false,
+		policy: 1
 	}
 );

@@ -13,15 +13,15 @@ import LoadingOverlay from 'react-loading-overlay';
 function App() {
 	const {
 		state: {
-			whatIfChange
-			// predictions,
-			// schoolClosing,
-			// workspaceClosing,
-			// restrictionsOnGatherings,
-			// closePublicTransport,
-			// internationalTravelControls
-		}
-		// getPrediction
+			whatIfChange,
+			predictions,
+			schoolClosing,
+			workspaceClosing,
+			restrictionsOnGatherings,
+			closePublicTransport,
+			internationalTravelControls
+		},
+		getPrediction
 	} = useContext(whatIfContext);
 
 	const {
@@ -30,12 +30,15 @@ function App() {
 		getCountryDailyData
 	} = useContext(GCCContext);
 
-	const {
-		state: { latestInformation, dailyData, dailyTests, toDate, qatarChange },
-		getLatestQatarData,
-		getQatarDailyData,
-		getQatarDailyTestsData
-	} = useContext(QatarContext);
+	const { getQatarDailyData } = useContext(QatarContext);
+
+	useEffect(
+		() => {
+			getQatarDailyData();
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	useEffect(
 		() => {
@@ -52,35 +55,25 @@ function App() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[ to ]
 	);
+
 	useEffect(
 		() => {
-			getLatestQatarData(toDate);
-			getQatarDailyData(toDate);
-			getQatarDailyTestsData(toDate);
+			getPrediction({
+				schoolClosing,
+				workspaceClosing,
+				restrictionsOnGatherings,
+				closePublicTransport,
+				internationalTravelControls
+			});
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ toDate ]
+		[
+			/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
+		]
 	);
-
-	// useEffect(
-	// 	() => {
-	// 		getPrediction({
-	// 			schoolClosing,
-	// 			workspaceClosing,
-	// 			restrictionsOnGatherings,
-	// 			closePublicTransport,
-	// 			internationalTravelControls
-	// 		});
-	// 	},
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// 	[
-	// 		/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
-	// 	]
-	// );
-	console.log(GCCData);
-	return GCCData && countryData && latestInformation && dailyData && dailyTests /*&& predictions*/ ? (
+	return GCCData && countryData && predictions ? (
 		<LoadingOverlay
-			active={whatIfChange || gccChange || qatarChange}
+			active={whatIfChange || gccChange}
 			spinner
 			text="Applying Your Customized Data..."
 		>

@@ -42,7 +42,7 @@ export const Header = () => {
 			style={{
 				display: 'flex',
 				alignItems: 'baseline',
-				marginBottom: 5
+				marginBottom: 5,
 			}}
 		>
 			<div className="col-md-4 mb-2" style={{ display: 'flex', alignItems: 'baseline' }}>
@@ -67,6 +67,8 @@ export const Header = () => {
 			>
 				<p style={{ marginRight: 0 }}>Situation On:</p>
 				<DatePicker
+				disableToolbar
+				allowKeyboardControl
 					defaultValue={last}
 					format="dd/MM/yyyy"
 					label="Select Date"

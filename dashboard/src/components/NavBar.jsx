@@ -23,7 +23,7 @@ export const NavBar = () => {
 								setSelectedBar('qatar');
 							}}
 						>
-							Qatar Situation
+							Country Situation
 						</Link>
 						<Link
 							to="/gcc"
@@ -32,7 +32,7 @@ export const NavBar = () => {
 								setSelectedBar('gcc');
 							}}
 						>
-							GCC Situation
+							GCC Summary
 						</Link>
 						<Link
 							to="/prediction"

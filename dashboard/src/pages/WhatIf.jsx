@@ -16,6 +16,7 @@ export const WhatIf = () => {
 		getPrediction,
 		loading
 	} = useContext(Context);
+
 	useEffect(() => {
 		document.title = 'What If Analysis';
 	}, []);

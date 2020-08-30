@@ -30,7 +30,8 @@ export const ParameterSlider = ({ marks, title, object, onChange }) => {
 					{title}
 				</p>
 				<DatePicker
-					variant="inline"
+				disableToolbar
+				allowKeyboardControl
 					label={'From'}
 					format="dd/MM/yyyy"
 					style={{ marginRight: 3 }}
@@ -47,7 +48,6 @@ export const ParameterSlider = ({ marks, title, object, onChange }) => {
 					disableToolbar
 					allowKeyboardControl
 					label={'To'}
-					variant="inline"
 					format="dd/MM/yyyy"
 					value={object.toDate}
 					onChange={(date) => {
@@ -72,7 +72,7 @@ export const ParameterSlider = ({ marks, title, object, onChange }) => {
 											name={object.name}
 											value={mark.value}
 											key={key}
-											defaultChecked={object.level === mark.value ? true : false}
+											checked={object.level === mark.value ? true : false}
 											onClick={(event) => {
 												onChange({ ...object, level: parseInt(event.target.value) });
 											}}
@@ -88,7 +88,7 @@ export const ParameterSlider = ({ marks, title, object, onChange }) => {
 									name={object.name}
 									key={key}
 									value={mark.value}
-									defaultChecked={object.level === mark.value ? true : false}
+									checked={object.level === mark.value ? true : false}
 									onClick={(event) => {
 										onChange({ ...object, level: parseInt(event.target.value) });
 									}}

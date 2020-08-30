@@ -19,10 +19,11 @@ export const Header = (params) => {
 			<div style={{ display: 'flex', alignItems: 'baseline' }}>
 				<p style={{ marginRight: 10 }}>Situation On:</p>
 				<DatePicker
+					disableToolbar
+					allowKeyboardControl
 					format="dd/MM/yyyy"
 					label="Select Date"
 					value={to}
-					variant="inline"
 					onChange={(date) => {
 						let month = date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
 						let ndate = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
