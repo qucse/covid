@@ -100,18 +100,17 @@ class Qatar {
 			confirmed: data.total_number_of_positive_cases_to_date,
 			newRecovered: data.number_of_new_recovered_cases_in_last_24_hrs,
 			recovered: data.total_number_of_recovered_cases_to_date,
-			newDeathCases: data.number_of_new_deaths_in_last_24_hrs,
+			newDeaths: data.number_of_new_deaths_in_last_24_hrs,
 			deaths: data.total_number_of_deaths_to_date,
-			newICUCases:
+			newIcu:
 				data.number_of_new_icu_admissions_in_last_24_hrs_dd_lhlt_ljdyd_lty_tm_dkhlh_fy_l_ny_lmrkz_khll_l_24_s_lmd,
-			totalICUCases: data.total_number_of_cases_under_icu_treatment_jmly_dd_lhlt_tht_l_lj_fy_l_ny_lmrkz,
-			newHospitalCases:
+			icu: data.total_number_of_cases_under_icu_treatment_jmly_dd_lhlt_tht_l_lj_fy_l_ny_lmrkz,
+			newHospitals:
 				data.number_of_new_acute_hospital_admissions_in_last_24_hrs_dd_lhlt_lhd_ljdyd_lty_tm_dkhlh_fy_lmstshf_khl,
-			totalHospitalCases:
-				data.total_number_of_acute_cases_under_hospital_treatment_jmly_dd_lhlt_lhd_tht_l_lj_fy_lmstshf,
+			hospitals: data.total_number_of_acute_cases_under_hospital_treatment_jmly_dd_lhlt_lhd_tht_l_lj_fy_lmstshf,
 			totalActiveCases: data.total_number_of_active_cases_undergoing_treatment_to_date,
 			newTests: data.number_of_new_tests_in_last_24_hrs,
-			totalTests: data.total_number_of_tests_to_date,
+			tests: data.total_number_of_tests_to_date,
 			lastUpdatedOn: response.data.records[0].record_timestamp
 		};
 	}

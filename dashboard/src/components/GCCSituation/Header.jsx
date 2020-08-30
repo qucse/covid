@@ -17,14 +17,15 @@ export const Header = (params) => {
 			}}
 		>
 			<div style={{ display: 'flex', alignItems: 'baseline' }}>
-				<p style={{ marginRight: 10 }}>Set Situation On:</p>
+				<p style={{ marginRight: 10 }}>Situation On:</p>
 				<DatePicker
 					format="dd/MM/yyyy"
+					label="Select Date"
 					value={to}
 					variant="inline"
 					onChange={(date) => {
 						let month = date.getUTCMonth() + 1 < 10 ? `0${date.getUTCMonth() + 1}` : date.getUTCMonth() + 1;
-						let ndate = date.getUTCDate() + 1 < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
+						let ndate = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
 						let year = date.getUTCFullYear();
 						let newDate = `${year}-${month}-${ndate}`;
 						if (new Date(newDate) > new Date(originalDate) || new Date(newDate) < new Date('2020-01-04'))

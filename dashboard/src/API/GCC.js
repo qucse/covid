@@ -14,13 +14,15 @@ class GCC {
 					if (element.date === toDate) index = k;
 				});
 				lastData = data[index];
-				previousLast = data[index - 2];
+				previousLast = data[index - 3];
 			} else {
 				lastData = data[data.length - 1];
 				previousLast = data[data.length - 3];
 			}
-			let active = lastData.confirmed - (lastData.recovered + lastData.deaths);
-			let previousActive = previousLast.confirmed - (previousLast.recovered + previousLast.deaths);
+			let active = lastData.confirmed - (lastData.recovered + lastData.deaths),
+				previousActive = previousLast.confirmed - (previousLast.recovered + previousLast.deaths),
+				mortality = lastData.deaths / lastData.confirmed * 100,
+				previousMortality = previousLast.deaths / previousLast.confirmed * 100;
 			return {
 				country: lastData.administrative_area_level_1,
 				date: lastData.date,
@@ -36,6 +38,17 @@ class GCC {
 				workspaceClosing: lastData.workplace_closing,
 				restrictionsOnGatherings: lastData.gatherings_restrictions,
 				closePublicTransport: lastData.transport_closing,
+				population: lastData.population,
+				mortality: mortality.toFixed(2),
+				icu: lastData.icu,
+				newIcu: lastData.icu - previousLast.icu,
+				hospitals: lastData.hosp,
+				newHospitals: lastData.hosp - previousLast.hosp,
+				tests: lastData.tests,
+				newTests: lastData.tests - previousLast.tests,
+				newMortality: (mortality - previousMortality).toFixed(2),
+				stringency: lastData.stringency_index,
+				newStringency: (lastData.stringency_index - previousLast.stringency_index).toFixed(2),
 				internationalTravelControls: lastData.international_movement_restrictions,
 				lastUpdated: lastData.lastUpdated
 			};
@@ -52,6 +65,7 @@ class GCC {
 			dates = [],
 			confirmed = [],
 			deaths = [],
+			tests = [],
 			recovered = [];
 		data.sort(function(a, b) {
 			var dateA = new Date(a.date),
@@ -70,24 +84,27 @@ class GCC {
 				if (index === 0) {
 					confirmed.push(element.confirmed);
 					deaths.push(element.deaths);
+					tests.push(element.tests);
 					recovered.push(element.recovered);
 				} else {
 					confirmed.push(element.confirmed - data[index - 1].confirmed);
 					deaths.push(element.deaths - data[index - 1].deaths);
+					tests.push(element.tests - data[index - 1].tests);
 					recovered.push(element.recovered - data[index - 1].recovered);
 				}
 			});
-			countryDailyData.push(dates, confirmed, deaths, recovered);
+			countryDailyData.push(dates, confirmed, deaths, recovered, tests);
 		} else if (cartesian === 'linear' || cartesian === 'logarithmic') {
 			data.forEach((element, index) => {
 				if (element.confirmed === 0 && element.recovered === 0 && element.deaths === 0) return;
 				let date = new Date(element.date);
 				dates.push(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
 				confirmed.push(element.confirmed);
+				tests.push(element.tests - data[index - 1].tests);
 				deaths.push(element.deaths);
 				recovered.push(element.recovered);
 			});
-			countryDailyData.push(dates, confirmed, deaths, recovered);
+			countryDailyData.push(dates, confirmed, deaths, recovered, tests);
 		}
 		return countryDailyData;
 	}

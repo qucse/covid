@@ -13,15 +13,15 @@ import LoadingOverlay from 'react-loading-overlay';
 function App() {
 	const {
 		state: {
-			whatIfChange,
-			predictions,
-			schoolClosing,
-			workspaceClosing,
-			restrictionsOnGatherings,
-			closePublicTransport,
-			internationalTravelControls
-		},
-		getPrediction
+			whatIfChange
+			// predictions,
+			// schoolClosing,
+			// workspaceClosing,
+			// restrictionsOnGatherings,
+			// closePublicTransport,
+			// internationalTravelControls
+		}
+		// getPrediction
 	} = useContext(whatIfContext);
 
 	const {
@@ -62,23 +62,23 @@ function App() {
 		[ toDate ]
 	);
 
-	useEffect(
-		() => {
-			getPrediction({
-				schoolClosing,
-				workspaceClosing,
-				restrictionsOnGatherings,
-				closePublicTransport,
-				internationalTravelControls
-			});
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[
-			/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
-		]
-	);
-
-	return GCCData && countryData && latestInformation && dailyData && dailyTests && predictions ? (
+	// useEffect(
+	// 	() => {
+	// 		getPrediction({
+	// 			schoolClosing,
+	// 			workspaceClosing,
+	// 			restrictionsOnGatherings,
+	// 			closePublicTransport,
+	// 			internationalTravelControls
+	// 		});
+	// 	},
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// 	[
+	// 		/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
+	// 	]
+	// );
+	console.log(GCCData);
+	return GCCData && countryData && latestInformation && dailyData && dailyTests /*&& predictions*/ ? (
 		<LoadingOverlay
 			active={whatIfChange || gccChange || qatarChange}
 			spinner

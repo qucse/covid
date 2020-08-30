@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import './InformationCard.css';
 import { Line } from 'react-chartjs-2';
-import { Context } from '../../contexts/QatarContext';
+import { Context } from '../../contexts/GCCContext';
+import { GCCDailyDataForm } from '../GCCSituation/GCCDailyDataForm';
 
 export const DailyData = () => {
-	const { state: { dailyData } } = useContext(Context);
-
-	const info = {
-		labels: dailyData[0],
+	const { state: { countryData, scaleType } } = useContext(Context);
+	const chartInfo = {
+		labels: countryData[0],
 		datasets: [
 			{
 				label: 'Confirmed',
@@ -28,7 +28,7 @@ export const DailyData = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: dailyData[1]
+				data: countryData[1]
 			},
 			{
 				label: 'Recovered',
@@ -49,7 +49,7 @@ export const DailyData = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: dailyData[3]
+				data: countryData[3]
 			},
 			{
 				label: 'Death',
@@ -70,10 +70,11 @@ export const DailyData = () => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: dailyData[2]
+				data: countryData[2]
 			}
 		]
 	};
+
 
 	return (
 		<div className="card mt-4 pl-3 pr-3 pb-3">
@@ -81,7 +82,19 @@ export const DailyData = () => {
 				<p className="title" style={{ marginBottom: 10, fontSize: 30 }}>
 					Daily Data
 				</p>
-				<Line data={info} options={{ scales: { yAxes: [ { type: 'linear' } ] } }} />
+				<GCCDailyDataForm />
+				<Line
+					data={chartInfo}
+					options={{
+						scales: {
+							yAxes: [
+								{
+									type: scaleType === 'logarithmic' ? 'logarithmic' : 'linear'
+								}
+							]
+						}
+					}}
+				/>
 			</div>
 		</div>
 	);

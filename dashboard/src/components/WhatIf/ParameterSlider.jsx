@@ -30,8 +30,6 @@ export const ParameterSlider = ({ marks, title, object, onChange }) => {
 					{title}
 				</p>
 				<DatePicker
-					disableToolbar
-					allowKeyboardControl
 					variant="inline"
 					label={'From'}
 					format="dd/MM/yyyy"

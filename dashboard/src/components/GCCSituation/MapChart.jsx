@@ -3,7 +3,8 @@ import { ZoomableGroup, ComposableMap, Geographies, Geography } from 'react-simp
 import { scaleQuantile } from 'd3-scale';
 import LinearGradient from './LinearGradient';
 
-const geoUrl = 'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
+const GEO_URL =
+	'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
 const MapChart = ({ setTooltipContent, data, choice }) => {
 	function isIncluded(geo, right, wrong) {
@@ -30,15 +31,15 @@ const MapChart = ({ setTooltipContent, data, choice }) => {
 			toColor: COLOR_RANGE[COLOR_RANGE.length - 1],
 			min: Math.min(...data.map((element) => element[choice])),
 			max: Math.max(...data.map((element) => element[choice]))
-		};
-	let m = data.map((d) => d[choice]).sort((a, b) => a - b);
-	const colorScale = scaleQuantile().domain(m).range(COLOR_RANGE);
+		},
+		range = data.map((d) => d[choice]).sort((a, b) => a - b),
+		colorScale = scaleQuantile().domain(range).range(COLOR_RANGE);
 
 	return (
 		<div>
 			<ComposableMap data-tip="" projectionConfig={{ scale: 1900, center: [ 47.738326, 24.477595 ] }}>
 				<ZoomableGroup>
-					<Geographies geography={geoUrl}>
+					<Geographies geography={GEO_URL}>
 						{({ geographies }) =>
 							geographies.map((geo) => {
 								const current = data.find((s) => s.country === geo.properties.NAME);

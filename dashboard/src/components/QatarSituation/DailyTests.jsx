@@ -24,7 +24,7 @@ export const DailyTests = ({ tests }) => {
 				pointHoverBorderWidth: 2,
 				pointRadius: 2,
 				pointHitRadius: 10,
-				data: tests[1]
+				data: tests[4]
 			}
 		]
 	};

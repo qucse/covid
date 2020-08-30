@@ -9,7 +9,6 @@ const GCCReducer = (state, action) => {
 				GCCData: action.payload,
 				gccChange: false,
 				originalDate: action.payload[0].lastUpdated,
-				to: action.payload[0].date
 			};
 		case 'load_country_data':
 			return { ...state, countryData: action.payload, gccChange: false };
@@ -23,6 +22,8 @@ const GCCReducer = (state, action) => {
 			return { ...state, mapChoice: action.payload };
 		case 'change_bubble':
 			return { ...state, bubbleChoice: action.payload };
+		case 'change_radar':
+			return { ...state, radarChoice: action.payload };
 		default:
 			return state;
 	}
@@ -35,16 +36,13 @@ const getGCCData = (dispatch) => async (toDate) => {
 		dispatch({ type: 'load_GCC_data', payload: data });
 	} catch (error) {}
 };
-
 const getCountryDailyData = (dispatch) => async (country, scaleType, to) => {
 	let data = await gcc.getDailyForCountry(country, scaleType, to);
 	dispatch({ type: 'load_country_data', payload: data });
 };
-
 const changeCountry = (dispatch) => (country) => {
 	dispatch({ type: 'change_country', payload: country });
 };
-
 const changeScaleType = (dispatch) => (scaleType) => {
 	dispatch({ type: 'change_scale_type', payload: scaleType });
 };
@@ -57,6 +55,9 @@ const changeMap = (dispatch) => (choice) => {
 const changeBubble = (dispatch) => (choice) => {
 	dispatch({ type: 'change_bubble', payload: choice });
 };
+const changeRadar = (dispatch) => (choice) => {
+	dispatch({ type: 'change_radar', payload: choice });
+};
 
 export const { Provider, Context } = createDataContext(
 	GCCReducer,
@@ -67,7 +68,8 @@ export const { Provider, Context } = createDataContext(
 		changeScaleType,
 		changeTo,
 		changeMap,
-		changeBubble
+		changeBubble,
+		changeRadar
 	},
 	{
 		GCCData: null,
@@ -79,7 +81,9 @@ export const { Provider, Context } = createDataContext(
 		gccChange: false,
 		mapChoice: 'confirmed',
 		bubbleChoice: 'confirmed',
+		radarChoice: 'confirmed',
 		mapName: 'map',
+		radarName: 'radar',
 		bubbleName: 'bubble'
 	}
 );
