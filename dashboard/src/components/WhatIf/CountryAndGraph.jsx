@@ -32,6 +32,25 @@ export const CountryAndGraph = () => {
 			<div className="row">
 				<div className=" col-md-4 mb-4">
 					<div className="card p-3" style={{ height: 118 }}>
+						<p style={{ fontSize: 20 }}>Predefined Policies</p>
+						<Select
+							defaultValue={' '}
+							value={policy}
+							onChange={(event) => {
+								changePolicy(event.target.value);
+							}}
+							style={{ width: '100%', padding: 0 }}
+						>
+							{predefinedPolicies.map((element, index) => (
+								<MenuItem key={index} value={element.value}>
+									{element.key}
+								</MenuItem>
+							))}
+						</Select>
+					</div>
+				</div>
+				<div className=" col-md-4 mb-4">
+					<div className="card p-3" style={{ height: 118 }}>
 						<p style={{ fontSize: 20 }}>Country</p>
 						<Select
 							labelId="demo-simple-select-placeholder-label-label"
@@ -60,25 +79,6 @@ export const CountryAndGraph = () => {
 							<MenuItem value={10}>Confirmed</MenuItem>
 							{/* <MenuItem value={20}>Recovered</MenuItem>
 							<MenuItem value={30}>Deaths</MenuItem> */}
-						</Select>
-					</div>
-				</div>
-				<div className=" col-md-4 mb-4">
-					<div className="card p-3" style={{ height: 118 }}>
-						<p style={{ fontSize: 20 }}>Predefined Policies</p>
-						<Select
-							defaultValue={' '}
-							value={policy}
-							onChange={(event) => {
-								changePolicy(event.target.value);
-							}}
-							style={{ width: '100%', padding: 0 }}
-						>
-							{predefinedPolicies.map((element, index) => (
-								<MenuItem key={index} value={element.value}>
-									{element.key}
-								</MenuItem>
-							))}
 						</Select>
 					</div>
 				</div>
