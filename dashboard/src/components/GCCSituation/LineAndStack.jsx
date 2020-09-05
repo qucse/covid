@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ColumnChart } from './ColumnChart';
+import { ColumnChart } from '../QatarSituation/ColumnChart';
 import { Radar } from './Radar';
 import { Context } from '../../contexts/GCCContext';
 export const LineAndStack = () => {

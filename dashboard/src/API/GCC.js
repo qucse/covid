@@ -9,20 +9,29 @@ class GCC {
 			let lastData;
 			let previousLast;
 			let index;
+			data.sort(function(a, b) {
+				var dateA = new Date(a.date),
+					dateB = new Date(b.date);
+				return dateA - dateB;
+			});
+			data = _.uniqBy(data, function(e) {
+				return e.date;
+			});
 			if (toDate) {
 				data.forEach((element, k) => {
 					if (element.date === toDate) index = k;
 				});
 				lastData = data[index];
-				previousLast = data[index - 3];
+				previousLast = data[index - 1];
 			} else {
 				lastData = data[data.length - 1];
-				previousLast = data[data.length - 3];
+				previousLast = data[data.length - 2];
 			}
 			let active = lastData.confirmed - (lastData.recovered + lastData.deaths),
 				previousActive = previousLast.confirmed - (previousLast.recovered + previousLast.deaths),
 				mortality = lastData.deaths / lastData.confirmed * 100,
 				previousMortality = previousLast.deaths / previousLast.confirmed * 100;
+
 			return {
 				country: lastData.administrative_area_level_1,
 				date: lastData.date,

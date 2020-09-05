@@ -1,46 +1,37 @@
 import React from 'react';
-import { Radar as RadarChart } from 'react-chartjs-2';
+import { Polar as RadarChart } from 'react-chartjs-2';
 import { GroupButton } from './GroupButton';
 import _ from 'lodash';
+import { scaleQuantile } from 'd3-scale';
 
 export const Radar = ({ data, choice, onChange, name }) => {
-	const COLORS = [
-		{
-			name: 'recovered',
-			backgroundColor: 'rgba(64, 168, 50,0.2)',
-			borderColor: 'rgba(64, 168, 50,1)',
-			borderWidth: 1,
-			hoverBackgroundColor: 'rgba(64, 168, 50,0.4)',
-			hoverBorderColor: 'rgba(64, 168, 50,1)'
-		},
-		{
-			name: 'confirmed',
-			backgroundColor: 'rgba(40, 158, 209,0.2)',
-			borderColor: 'rgba(40, 158, 209,1)',
-			borderWidth: 1,
-			hoverBackgroundColor: 'rgba(40, 158, 209,0.4)',
-			hoverBorderColor: 'rgba(40, 158, 209,1)'
-		},
-		{
-			name: 'deaths',
-			backgroundColor: 'rgba(235, 5, 5,0.2)',
-			borderColor: 'rgba(235, 5, 5,1)',
-			borderWidth: 1,
-			hoverBackgroundColor: 'rgba(235, 5, 5,0.4)',
-			hoverBorderColor: 'rgba(235, 5, 5,1)'
-		}
-	];
-
+	const COLOR_RANGE = [
+			'rgb(253, 212, 158)',
+			'rgb(253, 187, 132)',
+			'rgb(252, 141, 89)',
+			'rgb(239, 101, 72)',
+			'rgb(215, 48, 31)',
+			'rgb(179, 0, 0)',
+			'rgb(127, 0, 0)'
+		],
+		range = data
+			.filter((element) => element.country !== 'Saudi Arabia')
+			.map((d) => d[choice])
+			.sort((a, b) => a - b),
+		colorScale = scaleQuantile().domain(range).range(COLOR_RANGE),
+		COLORS = data
+			.filter((element) => element.country !== 'Saudi Arabia')
+			.map((element) => colorScale(element[choice]));
 	const info = {
 		labels: data.filter((element) => element.country !== 'Saudi Arabia').map((element) => element.country),
 		datasets: [
 			{
 				label: _.capitalize(choice),
-				backgroundColor: COLORS.find((color) => color.name === choice).backgroundColor,
-				borderColor: COLORS.find((color) => color.name === choice).borderColor,
+				backgroundColor: COLORS,
+				borderColor: COLORS,
 				borderWidth: 1,
-				hoverBackgroundColor: COLORS.find((color) => color.name === choice).hoverBackgroundColor,
-				hoverBorderColor: COLORS.find((color) => color.name === choice).hoverBorderColor,
+				hoverBackgroundColor: COLORS,
+				hoverBorderColor: COLORS,
 				data: data.filter((element) => element.country !== 'Saudi Arabia').map((element) => element[choice])
 			}
 		]
@@ -48,6 +39,7 @@ export const Radar = ({ data, choice, onChange, name }) => {
 	return (
 		<React.Fragment>
 			<GroupButton choice={choice} onChange={onChange} name={name} className="mb-5" />
+			<span className="mb-2" />
 			<RadarChart data={info} />
 		</React.Fragment>
 	);

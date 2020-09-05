@@ -19,6 +19,8 @@ import matplotlib.pyplot as plt
 import os
 from scipy.signal import savgol_filter
 import pickle
+import requests
+import io
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
@@ -28,15 +30,18 @@ def clean_noise(df, window_length=57, polyorder=6):
     ids = df['id'].unique()
     clean = []
     for id in ids:
-        clean.append(savgol_filter(df[df['id'] == id].confirmed, window_length, polyorder))
+        clean.append(savgol_filter(
+            df[df['id'] == id].confirmed, window_length, polyorder))
     clean = np.array(clean).flatten()
     return clean
 
 
-def load_Data(n_steps_in, country="QAT", start_date="2020-04-01", data_file_name="data-1-27-8.csv",
+def load_Data(n_steps_in, country="QAT", start_date="2020-04-01", data_file_name="prediction/data-1-27-8.csv",
               ):
     # clean the noise in data.
-    cdata = pd.read_csv(data_file_name)
+    url = 'https://storage.covid19datahub.io/data-1.csv'
+    s = requests.get(url).content
+    cdata = pd.read_csv(io.StringIO(s.decode('utf-8')))
     cdata = cdata[cdata['id'] == country]
     cdata = cdata[
         ['id', 'date', 'confirmed', 'school_closing', 'workplace_closing', 'gatherings_restrictions',
@@ -47,7 +52,8 @@ def load_Data(n_steps_in, country="QAT", start_date="2020-04-01", data_file_name
     cdata = cdata[cdata['date'] >= start_date]
 
     # scale the data before returning the data and te scaler
-    inital_data = cdata.iloc[0:n_steps_in][['confirmed_clean']].values.reshape(-1, 1).astype(float)
+    inital_data = cdata.iloc[0:n_steps_in][[
+        'confirmed_clean']].values.reshape(-1, 1).astype(float)
 
     return inital_data
 
@@ -65,7 +71,8 @@ def get_model(n_steps_in, n_steps_out):
     input_layer = Input(shape=(1, n_steps_in))
     input_layer2 = Input(shape=(1, n_steps_in * 5))
     # cases branch
-    x1 = Bidirectional(LSTM(126, return_sequences=True, activation='relu'))(input_layer)
+    x1 = Bidirectional(LSTM(126, return_sequences=True,
+                            activation='relu'))(input_layer)
     x1 = Bidirectional(LSTM(16, return_sequences=True, activation='relu'))(x1)
     # x1 = LeakyReLU(alpha=0.9)(x1)
     x1 = Bidirectional(LSTM(16, activation='relu'))(x1)
@@ -74,7 +81,8 @@ def get_model(n_steps_in, n_steps_out):
     x1 = Reshape((1, n_steps_out))(x1)
 
     # interventions branch
-    x2 = Dense(35, activation='linear', kernel_initializer="he_normal")(input_layer2)
+    x2 = Dense(35, activation='linear',
+               kernel_initializer="he_normal")(input_layer2)
     # x1 = LeakyReLU(alpha=0.9)(x1)
     x2 = Dense(4, activation='linear')(x2)
     # x1 = LeakyReLU(alpha=0.9)(x1)
@@ -124,18 +132,19 @@ def forecast(model, cases, interventions, n_days, n_steps_in, n_steps_out, scall
     return np.array(predictions)
 
 
-def predict_period(country, lockdown_measures, from_date=datetime.strptime("2020-08-27", "%Y-%m-%d"),
+def predict_period(country, lockdown_measures, from_date=datetime.strptime("2020-08-01", "%Y-%m-%d"),
                    days_to_predict=14):
     model = get_model(14, 1)
     if country == "SAU":
-        model.load_weights('SAU_cases_best_fold_model_14.h5')
-        scaler = load_scaler('SAU_std_scaler.pkl')
+        model.load_weights('prediction/SAU_cases_best_fold_model_14.h5')
+        scaler = load_scaler('prediction/SAU_std_scaler.pkl')
 
     else:
-        model.load_weights('QAT_cases_best_fold_model_14.h5')
-        scaler = load_scaler('QAT_std_scaler.pkl')
+        model.load_weights('prediction/QAT_cases_best_fold_model_14.h5')
+        scaler = load_scaler('prediction/QAT_std_scaler.pkl')
 
-    inital_data = load_Data(14, country, (from_date - timedelta(days=14)).strftime('%Y-%m-%d'))
+    inital_data = load_Data(
+        14, country, (from_date - timedelta(days=14)).strftime('%Y-%m-%d'))
     inital_data = scaler.transform(inital_data)
 
     to_date = from_date + timedelta(days=days_to_predict)
@@ -144,12 +153,12 @@ def predict_period(country, lockdown_measures, from_date=datetime.strptime("2020
     lockdown_data = list(lockdown_measures.values())
     intervention_data = []
     for (i, colName) in enumerate(interventions_columns):
-        duration = [max(0, (datetime.strptime(lockdown_data[i]['fromDate'], "%d/%m/%Y") - (
-                from_date - timedelta(days=14))).days),
-                    (min(to_date, datetime.strptime(lockdown_data[i]['toDate'], "%d/%m/%Y")) - max(
-                        datetime.strptime(lockdown_data[i]['fromDate'], "%d/%m/%Y"), (from_date - timedelta(days=14)))
-                     ).days,
-                    max(0, (to_date - datetime.strptime(lockdown_data[i]['toDate'], "%d/%m/%Y")).days)]
+        duration = [max(0, (datetime.strptime(lockdown_data[i]['fromDate'], "%Y-%m-%d") - (
+            from_date - timedelta(days=14))).days),
+            (min(to_date, datetime.strptime(lockdown_data[i]['toDate'], "%Y-%m-%d")) - max(
+                datetime.strptime(lockdown_data[i]['fromDate'], "%Y-%m-%d"), (from_date - timedelta(days=14)))
+             ).days,
+            max(0, (to_date - datetime.strptime(lockdown_data[i]['toDate'], "%Y-%m-%d")).days)]
         col_data = np.concatenate(
             (np.full(duration[0], 0), np.full(duration[1], lockdown_data[i]['level']), np.full(duration[2], 0)))
         intervention_data.append(col_data)
@@ -177,4 +186,3 @@ lockdown_measures = {'schoolClosing': {'level': 3,
                                                      'fromDate': '01/03/2020',
                                                      'toDate': '31/12/2020', }}
 #
-# prediction = predict_period('QAT', lockdown_measures , to_date=datetime.strptime("2020-12-31", "%Y-%m-%d"))
