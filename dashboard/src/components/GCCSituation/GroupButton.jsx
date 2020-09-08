@@ -7,6 +7,18 @@ export const GroupButton = ({ onChange, choice, name }) => {
 				<input
 					type="radio"
 					name={name}
+					defaultChecked={choice === 'active' ? true : false}
+					value={'active'}
+					onClick={(event) => {
+						onChange(event.target.value);
+					}}
+				/>
+				{' Active'}
+			</label>
+			<label className="btn btn-info">
+				<input
+					type="radio"
+					name={name}
 					defaultChecked={choice === 'confirmed' ? true : false}
 					value={'confirmed'}
 					onClick={(event) => {

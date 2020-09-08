@@ -25,7 +25,7 @@ function App() {
 	} = useContext(whatIfContext);
 
 	const {
-		state: { GCCData, country, scaleType, countryData, to, gccChange },
+		state: { GCCData, country, scaleType, countryData, to, gccChange, range },
 		getGCCData,
 		getCountryDailyData
 	} = useContext(GCCContext);
@@ -42,10 +42,10 @@ function App() {
 
 	useEffect(
 		() => {
-			getCountryDailyData(country, scaleType, to);
+			getCountryDailyData(country, scaleType, to, range);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[ country, scaleType, to ]
+		[ country, scaleType, to, range ]
 	);
 
 	useEffect(

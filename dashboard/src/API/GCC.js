@@ -17,6 +17,7 @@ class GCC {
 			data = _.uniqBy(data, function(e) {
 				return e.date;
 			});
+			data.splice(-1, 1);
 			if (toDate) {
 				data.forEach((element, k) => {
 					if (element.date === toDate) index = k;
@@ -66,15 +67,17 @@ class GCC {
 		}
 	}
 
-	async getDailyForCountry(country, cartesian, to) {
+	async getDailyForCountry(country, cartesian, to, daysToPredict) {
 		let url = 'https://qu-covid19-api.herokuapp.com/data?country=' + country;
 		const response = await axios.get(url);
+
 		let data = response.data,
 			countryDailyData = [],
 			dates = [],
 			confirmed = [],
 			deaths = [],
 			tests = [],
+			predictions = [],
 			recovered = [];
 		data.sort(function(a, b) {
 			var dateA = new Date(a.date),
@@ -84,7 +87,50 @@ class GCC {
 		data = _.uniqBy(data, function(e) {
 			return e.date;
 		});
+		data.splice(-1,1)
 		if (to) data = data.slice(0, data.indexOf(data.find((element) => element.date === to)) + 1);
+		const parameter = {
+			country: data[data.length - 1].id,
+			daysToPredict,
+			startDate: to ? to : data[data.length - 1].date,
+			lockdown: {
+				schoolClosing: {
+					name: 'school',
+					level: data[data.length - 1].school_closing,
+					fromDate: '2020-04-01',
+					toDate: '2020-12-31'
+				},
+				workspaceClosing: {
+					level: data[data.length - 1].workplace_closing,
+					name: 'work',
+					fromDate: '2020-04-01',
+					toDate: '2020-12-31'
+				},
+				restrictionsOnGatherings: {
+					level: data[data.length - 1].gatherings_restrictions,
+					name: 'gathering',
+					fromDate: '2020-04-01',
+					toDate: '2020-12-31'
+				},
+				closePublicTransport: {
+					level: data[data.length - 1].transport_closing,
+					name: 'pt',
+					fromDate: '2020-04-01',
+					toDate: '2020-12-31'
+				},
+				internationalTravelControls: {
+					level: data[data.length - 1].international_movement_restrictions,
+					name: 'travel',
+					fromDate: '2020-04-01',
+					toDate: '2020-12-31'
+				}
+			}
+		};
+		const predictionResponse = await axios.post('http://localhost:5000/prediction', {
+				data: JSON.stringify(parameter)
+			}),
+			predictionData = predictionResponse.data;
+
 		if (cartesian === 'daily') {
 			data.forEach((element, index) => {
 				if (element.confirmed === 0 && element.recovered === 0 && element.deaths === 0) return;
@@ -102,6 +148,7 @@ class GCC {
 					recovered.push(element.recovered - data[index - 1].recovered);
 				}
 			});
+			confirmed = _.concat(confirmed, predictionData.data);
 			countryDailyData.push(dates, confirmed, deaths, recovered, tests);
 		} else if (cartesian === 'linear' || cartesian === 'logarithmic') {
 			data.forEach((element, index) => {

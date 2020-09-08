@@ -1,15 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Context } from '../../contexts/GCCContext';
 
 export const GCCDailyDataForm = () => {
-	const {
-		state: { scaleType },
-
-		changeScaleType
-	} = useContext(Context);
-	const [ prediction, setPrediction ] = useState(7);
+	const { state: { scaleType, range }, changeScaleType, changeRange } = useContext(Context);
 	const scaleTypes = [
 		{
 			value: 'linear',
@@ -61,9 +56,9 @@ export const GCCDailyDataForm = () => {
 				<div className="col-md-6" style={{ display: 'flex', alignItems: 'baseline' }}>
 					<p style={{ marginRight: 20 }}>Prediction Range:</p>
 					<Select
-						value={prediction}
+						value={range}
 						onChange={(event) => {
-							setPrediction(event.target.value);
+							changeRange(event.target.value);
 						}}
 						style={{ width: '70%', padding: 0 }}
 					>
