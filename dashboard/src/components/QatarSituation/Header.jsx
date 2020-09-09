@@ -42,7 +42,7 @@ export const Header = () => {
 			style={{
 				display: 'flex',
 				alignItems: 'baseline',
-				marginBottom: 5,
+				marginBottom: 5
 			}}
 		>
 			<div className="col-md-4 mb-2" style={{ display: 'flex', alignItems: 'baseline' }}>
@@ -67,8 +67,8 @@ export const Header = () => {
 			>
 				<p style={{ marginRight: 0 }}>Situation On:</p>
 				<DatePicker
-				disableToolbar
-				allowKeyboardControl
+					disableToolbar
+					allowKeyboardControl
 					defaultValue={last}
 					format="dd/MM/yyyy"
 					label="Select Date"
@@ -78,9 +78,18 @@ export const Header = () => {
 						let ndate = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
 						let year = date.getUTCFullYear();
 						let newDate = `${year}-${month}-${ndate}`;
-						if (new Date(newDate) > new Date(originalDate) || new Date(newDate) < new Date('2020-01-04'))
-							alert(`Please select a date between 04/01/2020 and ${last}`);
-						else {
+						if (
+							new Date(newDate) >= new Date(new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000) ||
+							new Date(newDate) < new Date('2020-01-04')
+						) {
+							let date = new Date(
+								new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000
+							)
+							let format = `${date.getUTCDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`
+							alert(
+								`Please select a date between 04/01/2020 and ${format}`
+							);
+						} else {
 							changeTo(newDate);
 						}
 					}}

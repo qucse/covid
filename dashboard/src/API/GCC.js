@@ -87,7 +87,7 @@ class GCC {
 		data = _.uniqBy(data, function(e) {
 			return e.date;
 		});
-		data.splice(-1,1)
+		data.splice(-1, 1);
 		if (to) data = data.slice(0, data.indexOf(data.find((element) => element.date === to)) + 1);
 		const parameter = {
 			country: data[data.length - 1].id,
@@ -148,11 +148,12 @@ class GCC {
 					recovered.push(element.recovered - data[index - 1].recovered);
 				}
 			});
-			confirmed = _.concat(confirmed, predictionData.data);
-			countryDailyData.push(dates, confirmed, deaths, recovered, tests);
+			predictions = _.concat(confirmed, predictionData.data);
+			countryDailyData.push(dates, confirmed, deaths, recovered, tests, predictions);
 		} else if (cartesian === 'linear' || cartesian === 'logarithmic') {
 			data.forEach((element, index) => {
 				if (element.confirmed === 0 && element.recovered === 0 && element.deaths === 0) return;
+
 				let date = new Date(element.date);
 				dates.push(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`);
 				confirmed.push(element.confirmed);
@@ -160,7 +161,15 @@ class GCC {
 				deaths.push(element.deaths);
 				recovered.push(element.recovered);
 			});
-			countryDailyData.push(dates, confirmed, deaths, recovered, tests);
+			predictionData.data.forEach((element, index) => {
+				if (index === 0) {
+					predictionData.data[index] = element + confirmed[confirmed.length - 1];
+					return;
+				}
+				predictionData.data[index] = element + predictionData.data[--index];
+			});
+			predictions = _.concat(confirmed, predictionData.data);
+			countryDailyData.push(dates, confirmed, deaths, recovered, tests, predictions);
 		}
 		return countryDailyData;
 	}
