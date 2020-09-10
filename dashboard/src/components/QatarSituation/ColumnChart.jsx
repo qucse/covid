@@ -6,15 +6,6 @@ export const ColumnChart = ({ data }) => {
 		labels: data.map((country) => country.country),
 		datasets: [
 			{
-				label: 'Recovered',
-				backgroundColor: 'rgba(64, 168, 50)',
-				borderColor: 'rgba(64, 168, 50,1)',
-				borderWidth: 1,
-				hoverBackgroundColor: 'rgba(64, 168, 50,0.4)',
-				hoverBorderColor: 'rgba(64, 168, 50,1)',
-				data: data.map((element) => element.recovered)
-			},
-			{
 				label: 'Confirmed',
 				backgroundColor: 'rgba(40, 158, 209)',
 				borderColor: 'rgba(40, 158, 209,1)',
@@ -22,6 +13,15 @@ export const ColumnChart = ({ data }) => {
 				hoverBackgroundColor: 'rgba(40, 158, 209,0.4)',
 				hoverBorderColor: 'rgba(40, 158, 209,1)',
 				data: data.map((element) => element.confirmed)
+			},
+			{
+				label: 'Recovered',
+				backgroundColor: 'rgba(64, 168, 50)',
+				borderColor: 'rgba(64, 168, 50,1)',
+				borderWidth: 1,
+				hoverBackgroundColor: 'rgba(64, 168, 50,0.4)',
+				hoverBorderColor: 'rgba(64, 168, 50,1)',
+				data: data.map((element) => element.recovered)
 			},
 			{
 				label: 'Active',

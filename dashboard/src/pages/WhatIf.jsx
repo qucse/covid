@@ -8,6 +8,7 @@ import { Context } from '../contexts/whatIfContext';
 export const WhatIf = () => {
 	const {
 		state: {
+			whatIfCountry,
 			schoolClosing,
 			workspaceClosing,
 			restrictionsOnGatherings,
@@ -43,11 +44,15 @@ export const WhatIf = () => {
 						onClick={() => {
 							loading();
 							getPrediction({
-								schoolClosing,
-								workspaceClosing,
-								restrictionsOnGatherings,
-								internationalTravelControls,
-								closePublicTransport
+								country: whatIfCountry,
+								startDate: '2020-09-09',
+								lockdown: {
+									schoolClosing,
+									workspaceClosing,
+									restrictionsOnGatherings,
+									closePublicTransport,
+									internationalTravelControls
+								}
 							});
 						}}
 					>

@@ -4,7 +4,7 @@ import Select from '@material-ui/core/Select';
 import { Context } from '../../contexts/whatIfContext';
 
 export const CountryAndGraph = () => {
-	const { state: { policy }, changePolicy } = useContext(Context);
+	const { state: { policy, whatIfCountry }, changePolicy, changeCountry } = useContext(Context);
 	let predefinedPolicies = [
 		{
 			key: 'Level 1',
@@ -32,7 +32,7 @@ export const CountryAndGraph = () => {
 			<div className="row">
 				<div className=" col-md-4 mb-4">
 					<div className="card p-3" style={{ height: 118 }}>
-						<p style={{ fontSize: 20 }}>Predefined Policies</p>
+						<p style={{ fontSize: 20 }}>Common Policies</p>
 						<Select
 							defaultValue={' '}
 							value={policy}
@@ -56,14 +56,17 @@ export const CountryAndGraph = () => {
 							labelId="demo-simple-select-placeholder-label-label"
 							id="demo-simple-select-placeholder-label"
 							displayEmpty
-							defaultValue={10}
+							defaultValue={whatIfCountry}
+							onChange={(event) => {
+								changeCountry(event.target.value);
+							}}
 						>
-							<MenuItem value={10}>Qatar</MenuItem>
-							{/* <MenuItem value={20}>Bahrain</MenuItem>
-							<MenuItem value={30}>Kuwait</MenuItem>
-							<MenuItem value={40}>Saudi Arabia</MenuItem>
-							<MenuItem value={50}>Oman</MenuItem>
-							<MenuItem value={60}>United Arab Emirates</MenuItem> */}
+							<MenuItem value={'QAT'}>Qatar</MenuItem>
+							{/* <MenuItem value={20}>Bahrain</MenuItem> */}
+							<MenuItem value={'KWT'}>Kuwait</MenuItem>
+							{/* <MenuItem value={40}>Saudi Arabia</MenuItem> */}
+							{/* <MenuItem value={50}>Oman</MenuItem> */}
+							<MenuItem value={'ARE'}>United Arab Emirates</MenuItem>
 						</Select>
 					</div>
 				</div>

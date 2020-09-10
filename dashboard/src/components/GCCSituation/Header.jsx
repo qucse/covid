@@ -29,7 +29,10 @@ export const Header = (params) => {
 						let ndate = date.getUTCDate() < 10 ? `0${date.getUTCDate()}` : date.getUTCDate();
 						let year = date.getUTCFullYear();
 						let newDate = `${year}-${month}-${ndate}`;
-						if (new Date(newDate) >= new Date(originalDate) || new Date(newDate) < new Date('2020-01-04')) {
+						if (
+							new Date(newDate) > new Date(new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000) ||
+							new Date(newDate) < new Date('2020-01-04')
+						) {
 							let date = new Date(new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000);
 							let format = `${date.getUTCDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`;
 							alert(`Please select a date between 04/01/2020 and ${format}`);

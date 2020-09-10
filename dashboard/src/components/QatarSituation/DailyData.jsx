@@ -9,10 +9,12 @@ import lodash from 'lodash';
 export const DailyData = () => {
 	const { state: { countryData, scaleType, range } } = useContext(Context);
 	let lastData = countryData[0][countryData[0].length - 1];
-	let currDate = moment.utc(new Date(lastData)).startOf('day');
-	let lastDate = moment.utc(new Date(new Date(lastData).getTime() + range * 24 * 60 * 60 * 1000)).startOf('day');
+	let days = lastData.split('/');
+	let currDate = moment.utc(new Date(days[2], --days[1], ++days[0])).startOf('day');
+	let lastDate = moment
+		.utc(new Date(new Date(days[2], days[1], days[0]).getTime() + range * 24 * 60 * 60 * 1000))
+		.startOf('day');
 	let dates = [];
-
 	while (currDate.add(1, 'days').diff(lastDate) <= 0) {
 		let date = currDate.clone().toDate().toISOString();
 		date = date.substring(0, date.indexOf('T'));
@@ -20,8 +22,10 @@ export const DailyData = () => {
 		dates.push(`${date[2]}/${date[1]}/${date[0]}`);
 	}
 
+	// console.log(lastData)
+	let labels = lodash.concat(countryData[0], dates);
 	const chartInfo = {
-		labels: lodash.concat(countryData[0], dates),
+		labels,
 		datasets: [
 			{
 				label: 'Confirmed',
@@ -113,31 +117,36 @@ export const DailyData = () => {
 	function addLine() {
 		Chart.pluginService.register({
 			afterDraw: function(chart, easing) {
-				// if (chart.tooltip._active && chart.tooltip._active.length) {
-				// 	const activePoint = chart.controller.tooltip._active[0];
-				// 	console.log(activePoint);
-				// 	const ctx = chart.ctx;
-				// 	const x = activePoint.tooltipPosition().x;
-				// 	const topY = chart.scales['y-axis-0'].top;
-				// 	const bottomY = chart.scales['y-axis-0'].bottom;
+				const ctx = chart.ctx;
+				var index = chart.config.options.lineAtIndex;
 
-				// 	ctx.save();
-				// 	ctx.beginPath();
-				// 	ctx.moveTo(x, topY);
-				// 	ctx.lineTo(x, bottomY);
-				// 	ctx.lineWidth = 2;
-				// 	ctx.strokeStyle = '#e23fa9';
-				// 	ctx.stroke();
-				// 	ctx.restore();
-				// }
-				// console.log(chart);
+				if (index) {
+					var xAxis = chart.scales['x-axis-0'];
+					var yAxis = chart.scales['y-axis-0'];
+
+					var x1 = xAxis.getPixelForValue(index);
+					var y1 = yAxis.top;
+
+					var x2 = xAxis.getPixelForValue(index);
+					var y2 = yAxis.bottom;
+
+					ctx.save();
+					ctx.setLineDash([ 10, 10 ]);
+					ctx.beginPath();
+					ctx.moveTo(x1, y1);
+					ctx.lineWidth = 1;
+					ctx.strokeStyle = '#000000';
+					ctx.lineTo(x2, y2);
+					ctx.stroke();
+					ctx.restore();
+					ctx.setLineDash([ 0 ]);
+				}
 			}
 		});
-		// Chart.Types.Line.extend();
 	}
 
 	useEffect(() => {
-		// addLine();
+		addLine();
 	}, []);
 
 	return (
@@ -150,6 +159,7 @@ export const DailyData = () => {
 				<Line
 					data={chartInfo}
 					options={{
+						lineAtIndex: labels.indexOf(lastData),
 						scales: {
 							yAxes: [
 								{

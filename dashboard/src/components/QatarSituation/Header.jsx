@@ -79,7 +79,7 @@ export const Header = () => {
 						let year = date.getUTCFullYear();
 						let newDate = `${year}-${month}-${ndate}`;
 						if (
-							new Date(newDate) >= new Date(new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000) ||
+							new Date(newDate) > new Date(new Date(originalDate).getTime() - 1 * 24 * 60 * 60 * 1000) ||
 							new Date(newDate) < new Date('2020-01-04')
 						) {
 							let date = new Date(

@@ -22,15 +22,15 @@ export const GCCDailyDataForm = () => {
 
 	const predictionRanges = [
 		{
-			value: 7,
+			value: 8,
 			key: '+7 Days'
 		},
 		{
-			value: 14,
+			value: 15,
 			key: '+14 Days'
 		},
 		{
-			value: 30,
+			value: 31,
 			key: '+30 Days'
 		}
 	];

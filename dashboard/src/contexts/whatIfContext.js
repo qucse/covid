@@ -17,6 +17,8 @@ const whatIfReducer = (state, action) => {
 			return { ...state, predictions: action.payload, whatIfChange: false };
 		case 'change':
 			return { ...state, whatIfChange: true };
+		case 'change_country':
+			return { ...state, whatIfCountry: action.payload };
 		case 'change_policy':
 			return {
 				...state,
@@ -35,23 +37,23 @@ const whatIfReducer = (state, action) => {
 const policies = [
 	{
 		key: 1,
-		value: [ 1, 1, 3, 1, 1 ]
+		value: [ 3, 2, 4, 2, 4 ]
 	},
 	{
 		key: 2,
-		value: [ 2, 2, 2, 1, 1 ]
+		value: [ 3, 2, 4, 1, 4 ]
 	},
 	{
 		key: 3,
-		value: [ 3, 1, 4, 2, 2 ]
+		value: [ 2, 2, 2, 1, 4 ]
 	},
 	{
 		key: 4,
-		value: [ 3, 2, 4, 2, 2 ]
+		value: [ 1, 1, 3, 1, 4 ]
 	},
 	{
 		key: 5,
-		value: [ 3, 3, 4, 2, 2 ]
+		value: [ 3, 0, 0, 0, 3 ]
 	}
 ];
 
@@ -92,6 +94,9 @@ const changePolicy = (dispatch) => async (change) => {
 	});
 };
 
+const changeCountry = (dispatch) => async (object) => {
+	dispatch({ type: 'change_country', payload: object });
+};
 export const { Provider, Context } = createDataContext(
 	whatIfReducer,
 	{
@@ -102,7 +107,7 @@ export const { Provider, Context } = createDataContext(
 		changePolicy,
 		changeInternationalTravelControls,
 		changeRestrictionsOnGatherings,
-		loading
+		loading,changeCountry
 	},
 	{
 		schoolClosing: {
@@ -137,6 +142,7 @@ export const { Provider, Context } = createDataContext(
 		},
 		predictions: null,
 		whatIfChange: false,
-		policy: 1
+		policy: 1,
+		whatIfCountry: 'QAT'
 	}
 );

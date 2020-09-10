@@ -126,7 +126,7 @@ class GCC {
 				}
 			}
 		};
-		const predictionResponse = await axios.post('http://localhost:5000/prediction', {
+		const predictionResponse = await axios.post('https://qu-covid19-api.herokuapp.com/prediction', {
 				data: JSON.stringify(parameter)
 			}),
 			predictionData = predictionResponse.data;

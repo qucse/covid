@@ -14,6 +14,7 @@ function App() {
 	const {
 		state: {
 			whatIfChange,
+			whatIfCountry,
 			predictions,
 			schoolClosing,
 			workspaceClosing,
@@ -56,22 +57,25 @@ function App() {
 		[ to ]
 	);
 
-	// useEffect(
-	// 	() => {
-	// 		getPrediction({
-	// 			schoolClosing,
-	// 			workspaceClosing,
-	// 			restrictionsOnGatherings,
-	// 			closePublicTransport,
-	// 			internationalTravelControls
-	// 		});
-	// 	},
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// 	[
-	// 		/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
-	// 	]
-	// );
-	return GCCData && countryData /*&& predictions*/ ? (
+	useEffect(
+		() => {
+			getPrediction({
+				country: whatIfCountry,
+				lockdown: {
+					schoolClosing,
+					workspaceClosing,
+					restrictionsOnGatherings,
+					closePublicTransport,
+					internationalTravelControls
+				}
+			});
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[
+			/*schoolClosing, workspaceClosing, restrictionsOnGatherings, closePublicTransport, internationalTravelControls*/
+		]
+	);
+	return GCCData && countryData && predictions ? (
 		<LoadingOverlay active={whatIfChange || gccChange} spinner text="Applying Your Customized Data...">
 			<Router>
 				<NavBar />

@@ -82,7 +82,7 @@ export const { Provider, Context } = createDataContext(
 		originalDate: null,
 		countryData: null,
 		country: 'Qatar',
-		scaleType: 'linear',
+		scaleType: 'daily',
 		to: null,
 		gccChange: false,
 		mapChoice: 'active',
@@ -91,6 +91,6 @@ export const { Provider, Context } = createDataContext(
 		mapName: 'map',
 		radarName: 'radar',
 		bubbleName: 'bubble',
-		range: 7
+		range: 15
 	}
 );
