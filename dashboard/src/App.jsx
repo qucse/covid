@@ -9,6 +9,7 @@ import { Context as QatarContext } from './contexts/QatarContext';
 import { Context as whatIfContext } from './contexts/whatIfContext';
 import LoadingScreen from 'react-loading-screen';
 import LoadingOverlay from 'react-loading-overlay';
+import { Footer } from './components/Footer';
 
 function App() {
 	const {
@@ -90,6 +91,7 @@ function App() {
 						<WhatIf />
 					</Route>
 				</Switch>
+				<Footer />
 			</Router>
 		</LoadingOverlay>
 	) : (
